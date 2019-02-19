@@ -1,0 +1,154 @@
+.body{
+  text-align: center;
+}
+.root-container{
+  background-color: white;
+  font-family: 'Rubik', sans-serif;
+  
+}
+.sys-name{
+  text-align: center;
+  color: #4156A6;
+  margin: 0;
+}
+.logo1{
+  width: 206.76px;
+  /* height: auto; */
+  display: block;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.login-box-container{
+  background: #4156A6;
+  margin: auto;
+  width: 512px;
+  height: 377px;
+  border-radius: 10px;
+  text-align: center;
+}
+.login-header{
+  font-size: 26px;
+  text-align: center;
+  padding: 42px 86px 33px 85px;
+  color: white;
+  /* height: auto; */
+  /* margin: 42px 86px 33px 85px; */
+  /* font-size: 150%;
+  color: white; */
+  /* padding: 50px; */
+  /* margin: 42px 86px 33px; */
+  
+}
+.login-input{
+  color: #D9DDED;
+  font-size: 21px;
+  font-family: 'Rubik', sans-serif;
+  margin-bottom: 26px;
+  background-color: #A0AAD2;
+  padding: 5px 15px; 
+  width: 316px;
+  height: 61px;
+  box-sizing: border-box; 
+  border-radius: 5px;
+  border: none;   
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #D9DDED;
+  font-family: 'Rubik', sans-serif;
+  font-size: 21px;
+}
+.errmsg{
+  color:white;
+  margin-top: 0;
+}
+.login-btn{
+  background-color: white; 
+  color: #4156A6;
+  padding: 15px 32px;
+  margin: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 21px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+}
+.logo2{
+  width: 196px;
+  display: block;
+  margin: auto;
+  margin-top: 48px;
+}
+
+/* .mainpage-container{
+  font-family: 'Rubik', sans-serif;
+}
+.logo3{
+  width: 205px;
+  display: block;
+  margin-left: 8px;
+  margin-top: 8px;
+}
+.sidenav {
+  height: 100%;
+  width: 221px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #4156A6;
+  overflow-x: hidden;
+} */
+/* .team-left{
+  height: 50px;
+  margin: 20px;
+  text-align: center;
+}
+h2{
+  color: #4156A6;
+}
+h3{
+  color: white;
+}
+.overview-btn{
+
+} */
+/* .sidenav a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+/* .content {
+  margin-left: 221px;
+  padding-left: 20px;
+} */
+
+/* body{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+}
+ul{
+  padding: 0;
+
+}
+li{
+  list-style-type: none;
+}
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.languages{
+  display: flex;
+  justify-content: center;
+}
+.languages li{
+  margin: 10px;
+  font-weight: bold;
+  cursor: point;
+}
+.nav{
+  display: flex;
+}
+.active{
+  font-weight: bold;
+} */
