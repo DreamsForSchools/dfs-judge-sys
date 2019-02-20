@@ -1,4 +1,5 @@
 var React = require('react');
+require('../login.css')
 var withRouter = require('react-router-dom');
 var ReactRouter = require('react-router-dom');
 var Router = ReactRouter.BrowserRouter;

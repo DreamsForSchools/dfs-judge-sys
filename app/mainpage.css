@@ -1,0 +1,118 @@
+.logo3{
+  width: 205px;
+  display: block;
+  margin-left: 8px;
+  margin-top: 8px;
+}
+.sidenav {
+  height: 100%;
+  width: 221px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #4156A6;
+  overflow-x: hidden;
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
+} 
+.team{
+  height: 45px;
+  width: 221px;
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+}
+.team-num{
+  margin: 0;
+  vertical-align: middle;
+  line-height: 45px; 
+  color: white;
+  font-size: 24px;
+}
+.submit-btn{
+  background-color: white;
+  border-radius: 10px;
+  width: 114px;
+  height: 50px;
+  border-width: 5px;
+  border-color: #D9DDED;
+  display: inline-block;
+  font-size: 24px;
+  color: #4156A6;
+  margin-top: 20px;
+}
+/* .sidenav a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+.right-content {
+  margin-left: 221px;
+  /* padding-left: 20px; */
+  position: fixed;
+  height: 100%;
+  font-family: 'Rubik', sans-serif;
+  /* background: #D9DDED; */
+  top: 0;
+  right: 0;
+}
+.top-bar{
+  background: white;
+  height: 137px;
+  width: 803px;
+}
+.top-header{
+  font-size: 29px;
+  color: #4156A6;
+  padding-top: 22px;
+  padding-left: 51px;
+  margin: 0;
+}
+.tab-btn{
+  color: #4156A6;
+  text-align: center;
+  font-size: 22px;
+  margin-left: 51px;
+  margin-top: 37px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  display: inline-block;
+  background-color: #D9DDED;
+}
+.total-score{
+  text-align: center;
+  font-size: 23px;
+  /* margin-left: 224px; */
+  width: 187px;
+  float: right;
+  border-radius: 17.5px;
+  background-color: #A0AAD2;
+  margin-top: 37px;
+}
+.main-container{
+  background: #D9DDED;
+  height: 632px;
+  bottom: 0;
+  padding: 70px 42px;
+}
+.main-content-box{
+  background: white;
+  border-radius: 10px;
+}
+.main-header{
+  font-size: 22px;
+  color: #4156A6;
+  padding-top: 35px;
+  padding-left: 32px;
+  margin: 0;
+  /* margin: 0;
+  padding-top: 35px; */
+}
+.main-content{
+  font-size: 22px;
+  /* padding-left: 32px;
+  padding-top: 24px; */
+  padding: 24px 32px;
+  margin: 0;
+}

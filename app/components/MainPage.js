@@ -1,30 +1,24 @@
 var React = require('react');
-// var Button = require('react-boostrap');
-// import { Container, Row, Col } from 'reactstrap';
+require('../mainpage.css');
+// require('../login.css')
 
 class MainPage extends React.Component{
   constructor(props){
     super(props);
-    this.state={};
+    this.state={onOverview: true, // set overview to default 
+                onScore: false};
+    this.onOverview = this.onOverview.bind(this);
+    this.onScore = this.onScore.bind(this);
   }
-  openOverview(){
-    return (
-      <div id="Overview" className="w3-container city">
-        <h2>Overview</h2>
-        <p>London is the capital city of England.</p>
-      </div>
-    )
+  onOverview(){
+    this.setState({onOverview: true});
+    this.setState({onScore: false});
   }
-  openScore(){
-    return(
+  onScore(){
+    this.setState({onScore: true});
+    this.setState({onOverview: false});
+  }
 
-      <div id="Score" className="w3-container city">
-      <h2>Score</h2>
-        <p>Tokyo is the capital of Japan.</p>
-      </div>
-    )
-    
-  }
   render(){
     return (
 
@@ -32,29 +26,34 @@ class MainPage extends React.Component{
 
         <div className="sidenav">
           <img className="logo3" src={require('../assets/logo.png')}></img>
+          <div className="team"><p className="team-num">Team 1</p></div>
+          <button className="submit-btn" type="button">Submit</button>
           
         </div>
 
-        <div className="content">
-
-          <h2>Team Name</h2>
-          <div className="w3-bar w3-black">
-            <button type="button" className="w3-bar-item w3-button" onClick={this.openOverview}>Overview</button>
-            <button type="button" className="w3-bar-item w3-button" onClick={this.openScore}>Score</button>
+        <div className="right-content">
+          <div className="top-bar">
+            <p className="top-header">Team Name</p>
             
+            <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
+            <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
+            <div className="total-score">Total: 80/100</div>
           </div>
-          {/* <div id="Overview" className="w3-container city">
-            <h2>Overview</h2>
-            <p>London is the capital city of England.</p>
-          </div> */}
 
-          {/* <div id="Score" className="w3-container city">
-            <h2>Score</h2>
-            <p>Tokyo is the capital of Japan.</p>
-          </div> */}
-          {/* <button type="button" className="overview-btn"> Overview</button>
-          <button type="button" className="score-btn"> Score</button> */}
-
+          <div className="main-container">
+            {this.state.onOverview && 
+            <div className="main-content-box">
+              <p className="main-header">App Name</p>
+              <p className="main-content">Judge View</p>
+              <p className="main-header">App Description</p>
+              <p className="main-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.</p>
+            </div>}
+            {this.state.onScore &&
+            <div className="main-content-box">
+              <p className="main-header">Score</p>
+              <p className="main-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic laborum voluptas soluta accusantium. A laudantium magni adipisci, sint omnis voluptatibus sequi minus eos fugit nobis. Maxime nemo reiciendis et corrupti.</p>
+            </div>}  
+          </div>
         </div>
   
       </div>
