@@ -5,6 +5,8 @@ import MainPage from './components/MainPage';
 
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
+var Team = require('./data/team');
+var Team1 = new Team(1,"teamname","appname","description");
 
 class App extends Component{
   // constructor(props){
@@ -12,6 +14,7 @@ class App extends Component{
   //     this.state ={};
   // }
   render(){
+    
       return(
         <Router>
           <div>
@@ -22,8 +25,8 @@ class App extends Component{
             </ul> */}
             
 
-            <Route path="/" exact={true} component={Login} />
-            <Route path="/score" exact strict component={MainPage} />
+            {/* <Route path="/" exact={true} component={Login} /> */}
+            <Route path="/" exact strict component={() => <MainPage team={Team1}></MainPage>}/>
           </div>
         </Router>
           
@@ -33,6 +36,8 @@ class App extends Component{
 }
 
 ReactDOM.render(
-  <App />, 
+  <App 
+  
+  />, 
   document.getElementById('app')
 )

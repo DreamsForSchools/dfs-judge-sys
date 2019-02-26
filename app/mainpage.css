@@ -16,23 +16,12 @@
   font-family: 'Rubik', sans-serif;
   text-align: center;
 } 
-/* .team{
+.team{
   height: 45px;
   width: 221px;
   text-align: center;
   display: block;
   margin-top: 10px;
-} */
-.team-tab{
-  height: 45px;
-  width: 221px;
-  text-align: center;
-  display: block;
-  margin-top: 10px;
-  background: #4156A6;
-  border: none;
-  font-size: 24px;
-  color: white;
 }
 .team-num{
   margin: 0;
@@ -59,9 +48,11 @@
 } */
 .right-content {
   margin-left: 221px;
+  /* padding-left: 20px; */
   position: fixed;
   height: 100%;
   font-family: 'Rubik', sans-serif;
+  /* background: #D9DDED; */
   top: 0;
   right: 0;
 }
@@ -92,6 +83,7 @@
 .total-score{
   text-align: center;
   font-size: 23px;
+  /* margin-left: 224px; */
   width: 187px;
   float: right;
   border-radius: 17.5px;
@@ -107,54 +99,34 @@
 .main-content-box{
   background: white;
   border-radius: 10px;
+  width: 1135px;
 }
-.main-overview-header{
+.main-header{
   font-size: 22px;
   color: #4156A6;
   padding-top: 35px;
   padding-left: 32px;
   margin: 0;
+  /* margin: 0;
+  padding-top: 35px; */
 }
-.main-overview-content{
+.main-content{
   font-size: 22px;
   /* padding-left: 32px;
   padding-top: 24px; */
   padding: 24px 32px;
   margin: 0;
 }
-.main-score-header{
-  font-size: 22px;
-  color: #4156A6;
-  padding-top: 35px;
-  padding-left: 32px;
-  margin: 0;
-  display: inline-block;
-}
-.main-socre-content-appname{
-  padding-top: 35px;
-  padding-right: 32px;
-  margin: 0;
-  float: right;
-  font-size: 22px;
-}
-.main-score-content{
-  padding-top: 35px;
-  padding-left: 32px;
-  margin: 0;
-  font-size: 20px;
-}
 
-.score-input{
+.score-critiria{
+  font-size: 20px;
+  padding-left: 64px;
+}
+.score-field{
   color: #4156A6;
   background-color: #A0AAD2;
-  border-radius: 5px;
   border: none;
-  height: 24px;
-  padding: 0;
-  display: inline-block;
-  padding-right: 30px;
-}
-.out-of{
+  border-radius: 5px;
   float: right;
-  margin: 0;
+  margin-right: 50px;
 }

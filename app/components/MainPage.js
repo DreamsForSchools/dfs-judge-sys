@@ -1,41 +1,16 @@
 var React = require('react');
-var Team = require('../components/Team');
 require('../mainpage.css');
-
-
-var Teams = [{id: '1', appName: 'app jam', description: 'this is description', score: 'empty right now', select: false}, 
-            {id: '2', appName: 'app jam2', description: 'this is description2', score: 'score 2', select: false},
-            {id: '2', appName: 'app jam2', description: 'this is description2', score: 'score 2', select: false}];
-
-function getTeam(){
-  // TODO: GET TEAM FROM DATABASE 
-}
-var Team1 = new Team();
-// Generate Team Tab for each team in the Team Array (SHOULD USE NAV INSTEAD OF TAB)
-function TeamTab(){
-  const output = [];
-  for (var x = 0; x < Teams.length; x++){
-    output.push(<button className="team-tab"onClick={onTeam}>Team {x+1}</button>);
-  };
-  return output;
-};
-
-function onTeam(){
-};
+// require('../login.css')
 
 class MainPage extends React.Component{
   constructor(props){
     super(props);
-    this.state={onOverview: false, // set overview to default 
-                onScore: true,};
+    this.state={onOverview: true, // set overview to default 
+                onScore: false};
     this.onOverview = this.onOverview.bind(this);
     this.onScore = this.onScore.bind(this);
   }
-  onHaha(){
-    console.log("haaha")
-  }
   onOverview(){
-    console.log("haha");
     this.setState({onOverview: true});
     this.setState({onScore: false});
   }
@@ -43,69 +18,67 @@ class MainPage extends React.Component{
     this.setState({onScore: true});
     this.setState({onOverview: false});
   }
-  handleSubmit(){
-    // Submit all score to database
-    
-    console.log("Submit clicked");
-  }
-  handleSave(){
-    // Save a team's score
-    alert("Score saved!");
-    console.log("Save clicked")
-  }
+
   render(){
     return (
-      <div>
-        <Team>
-        </Team>
-        
-      </div>
-    )
-    
-  }
-  // render(){
-  //   return (
 
-  //     <div className="mainpage-container">
+      <div className="mainpage-container">
 
-  //       <div className="sidenav">
-  //         <img className="logo3" src={require('../assets/logo.png')}></img>
-  //         <TeamTab></TeamTab>
-  //         <button className="submit-btn" type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>          
-  //       </div>
+        <div className="sidenav">
+          < img className="logo3" src={require('../assets/logo.png')}></img>
+          <div className="team"><p className="team-num">{this.props.team.teamname}</p ></div>
+          <button className="submit-btn" type="button">Submit</button>
+          
+        </div>
 
-  //       <div className="right-content">
-  //         <div className="top-bar">
-  //           <p className="top-header">Team Name</p>
-  //           <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
-  //           <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
-  //           <div className="total-score">Total: 80/100</div>
-  //         </div>
-  //         <div className="main-container">
-  //           {this.state.onOverview && 
+        <div className="right-content">
+          <div className="top-bar">
+            <p className="top-header">Team Name</p >
+            
+            <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
+            <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
+            <div className="total-score">Total: 80/100</div>
+          </div>
 
-  //           <div className="main-content-box">
-  //             <p className="main-overview-header">App Name</p>
-  //             <p className="main-overview-content">Judge View</p>
-  //             <p className="main-overview-header">App Description</p>
-  //             <p className="main-overview-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.</p>
-  //           </div>}
-  //           {this.state.onScore &&
+          <div className="main-container">
+            {this.state.onOverview && 
+            <div className="main-content-box">
+              <p className="main-header">App Name</p >
+              <p className="main-content">Judge View</p >
+              <p className="main-header">App Description</p >
+              <p className="main-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.</p >
+            </div>}
+            {this.state.onScore &&
+            <div className="main-content-box">
+              <p className="main-header">{this.props.team.appname}</p >
+              
+              <p className="main-header">DESIGN-15 pts:</p >
+              <label className="score-critiria">1. UI/UX:</label>
+              <input className="score-field" type="number"name="dscore1"></input><br></br>
+              <label className="score-critiria">2. Cohesive look include:</label>
+              <input className="score-field" type="number"name="dscore2"></input><br></br>
+              <p className="main-header">FUNCTIONALITY-15 pts:</p >
+              <label className="score-critiria">1. Usability/Bugs:</label>
+              <input className="score-field" type="number"name="fscore1"></input><br></br>
+              <label className="score-critiria">2. Standout Feature/technical sophistication:</label>
+              <input className="score-field" type="number"name="fscore2"></input><br></br>
+              <p className="main-header">THEME-15 pts:</p >
+              <label className="score-critiria">1. Social Justice:</label>
+              <input className="score-field" type="number"name="tscore1"></input><br></br>
+              <label className="score-critiria">2. Creativity:</label>
+              <input className="score-field" type="number"name="tscore2"></input><br></br>
+              <p className="main-header">PRESENTATION-10 pts:</p >
+              <label className="score-critiria">1. On-stage presentation:</label>
+              <input className="score-field"type="number"name="tscore1"></input><br></br>
+              
 
-  //           <div className="main-content-box">
-  //             <p className="main-score-header">App name</p>
-  //             <p className="main-socre-content-appname">app name</p>
-  //             <div className="main-score-content">
-  //               <p className="score-header">DESIGN-15 pts:</p><br></br>
-  //               <label htmlFor="scorefield">1.  UI/UX: 	</label>
-  //               <input type="number" id="scorefield" className="score-input"placeholder=" "></input><p className="outof">/15</p>
-  //             </div>
-  //           </div>}  
-  //         </div>
-  //       </div>
+
+            </div>}
+          </div>
+        </div>
   
-  //     </div>
-  //   );
-  //}
+      </div>
+    );
+  }
 }
 module.exports = MainPage;
