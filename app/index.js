@@ -6,7 +6,10 @@ import MainPage from './components/MainPage';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 var Team = require('./data/team');
-var Team1 = new Team(1,"teamname","appname","description");
+var Team1 = new Team(1,
+                    "teamname",
+                    "appname",
+                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.");
 
 class App extends Component{
   // constructor(props){

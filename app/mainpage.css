@@ -1,3 +1,4 @@
+
 .logo3{
   width: 205px;
   display: block;
@@ -15,6 +16,7 @@
   overflow-x: hidden;
   font-family: 'Rubik', sans-serif;
   text-align: center;
+  overflow: scroll;
 } 
 .team{
   height: 45px;
@@ -30,7 +32,7 @@
   color: white;
   font-size: 24px;
 }
-.submit-btn{
+.btn{
   background-color: white;
   border-radius: 10px;
   width: 114px;
@@ -55,6 +57,7 @@
   /* background: #D9DDED; */
   top: 0;
   right: 0;
+  overflow: scroll;
 }
 .top-bar{
   background: white;
@@ -92,9 +95,9 @@
 }
 .main-container{
   background: #D9DDED;
-  height: 632px;
+  height: 720px;
   bottom: 0;
-  padding: 70px 42px;
+  padding: 30px 42px;
 }
 .main-content-box{
   background: white;
@@ -118,15 +121,39 @@
   margin: 0;
 }
 
+.score-critiria-odd{
+  display:inline-block;
+  font-size: 20px;
+  padding-left: 64px;
+  margin-bottom: 20px; 
+}
 .score-critiria{
+  display:inline-block;
   font-size: 20px;
   padding-left: 64px;
 }
-.score-field{
+/* .score-critiria :nth-child(2){
+  display:inline-block;
+  margin-bottom: 20px; 
+} */
+.score-input{
   color: #4156A6;
   background-color: #A0AAD2;
   border: none;
   border-radius: 5px;
   float: right;
-  margin-right: 50px;
+  margin-right: 70px;
+  height: 30px;
+  width: 40px;
+  font-size: 18px;
+}
+/* #outof{
+  float: right;
+  margin-right: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+} */
+#save-btn{
+  float: right;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
