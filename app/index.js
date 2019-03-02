@@ -28,8 +28,8 @@ class App extends Component{
             </ul> */}
             
 
-            <Route path="/" exact={true} component={Login} />
-            <Route path="/main" exact strict component={() => <MainPage team={Team1}></MainPage>}/>
+            {/* <Route path="/" exact={true} component={Login} /> */}
+            <Route path="/" exact strict component={() => <MainPage team={Team1}></MainPage>}/>
           </div>
         </Router>
           

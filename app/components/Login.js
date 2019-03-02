@@ -27,7 +27,7 @@ class Login extends React.Component{
     return(
       
       <div className="root-container">
-        <img className="logo1" src={require('../assets/dfs_programlogo_appjam_stacked.png')} alt="Logo"></img>
+        <div className="logo-container"><img className="logo1" src={require('../assets/dfs_programlogo_appjam_stacked.png')} alt="Logo"></img></div>
         <p className="sys-name">Judge</p>
         <div className="login-box-container">
           <div className="login-header">SIGN IN TO YOUR ACCOUNT</div>

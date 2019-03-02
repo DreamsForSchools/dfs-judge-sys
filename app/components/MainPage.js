@@ -65,17 +65,26 @@ class MainPage extends React.Component{
 
         <div className="sidenav">
           <img className="logo3" src={require('../assets/logo.png')}></img>
-          <div className="team"><p className="team-num">{this.props.team.teamname}</p ></div>
-          <button className="btn" type="button" onClick={this.handleSubmit}>Submit</button>
+          <h1 className="team-label">Menu</h1>
+
+          <div className="team">
+            <button className="team-tab-current" type="button">Team 1</button>
+            <button className="team-tab" type="button">Team 2</button>
+            <button className="team-tab-submit" type="button" onClick={this.handleSubmit}>Submit</button>
+          </div>
+          
+          {/* <button className="btn" type="button" onClick={this.handleSubmit}>Submit</button> */}
           
         </div>
 
         <div className="right-content">
           <div className="top-bar">
-            <p className="top-header">Team Name</p >
-            <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
-            <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
+            <h1 className="top-header">Team Name</h1>
+            <button className="tab-btn-overview"><img className="tab-overview-img"src={require('../assets/overview-selected.png')} onClick={this.onOverview}></img></button>
+            <button className="tab-btn-score"><img className="tab-score-img"src={require('../assets/score-unselected.png')} onClick={this.onScore}></img></button>
+            {/* <div className="fill"></div> */}
             <div className="total-score">Total: {this.state.totalScore}/100</div>
+
           </div>
 
           <div className="main-container">
@@ -88,7 +97,8 @@ class MainPage extends React.Component{
             </div>}
             {this.state.onScore &&
             <div className="main-content-box">
-              <p className="main-header">{this.props.team.appname}</p >
+              <p className="main-header-appname">{this.props.team.appname}</p >
+              <button className="save-btn" id="save-btn" type="button" onClick={this.handleSave}>Save</button>
               <p className="main-header">DESIGN-15 pts:</p >
               <label className="score-critiria-odd">1. UI/UX:</label>
               <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore1", e)}></input><br></br>
@@ -107,7 +117,6 @@ class MainPage extends React.Component{
               <p className="main-header">PRESENTATION-10 pts:</p >
               <label className="score-critiria-odd">1. On-stage presentation:</label>
               <input className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br>
-              <button className="btn" id="save-btn" type="button" onClick={this.handleSave}>Save</button>
               {/* <SavePopup></SavePopup> */}
               {/* {<Button color="primary" disabled={this.state.notChange} onClick={() => this.showAlert('Save changes for client', '¿Are you sure?', () => this.updateCustomer, null) } >Save changes</Button>} */}
               {/* <SweetAlert 
@@ -119,6 +128,7 @@ class MainPage extends React.Component{
               </SweetAlert> */}
               
             </div>}
+
           </div>
         </div>
   
