@@ -15,7 +15,7 @@ class Login extends React.Component{
   submitLogin(e){
     console.log(this.state);
     e.preventDefault()
-    this.props.history.push('/score');
+    this.props.history.push('/main');
   }
   onUsernameChange(e){
     this.setState({username: e.target.value});

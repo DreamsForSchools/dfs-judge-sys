@@ -1,4 +1,3 @@
-
 .logo3{
   width: 205px;
   display: block;
@@ -33,6 +32,7 @@
   font-size: 24px;
 }
 .btn{
+  cursor: pointer;
   background-color: white;
   border-radius: 10px;
   width: 114px;
@@ -44,17 +44,15 @@
   color: #4156A6;
   margin-top: 20px;
 }
-/* .sidenav a:hover {
-  background-color: #ddd;
-  color: black;
-} */
+.btn:hover{
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+
+}
 .right-content {
   margin-left: 221px;
-  /* padding-left: 20px; */
   position: fixed;
   height: 100%;
   font-family: 'Rubik', sans-serif;
-  /* background: #D9DDED; */
   top: 0;
   right: 0;
   overflow: scroll;
@@ -83,10 +81,12 @@
   display: inline-block;
   background-color: #D9DDED;
 }
+.tab-btn:hover{
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
 .total-score{
   text-align: center;
   font-size: 23px;
-  /* margin-left: 224px; */
   width: 187px;
   float: right;
   border-radius: 17.5px;
@@ -110,13 +110,9 @@
   padding-top: 35px;
   padding-left: 32px;
   margin: 0;
-  /* margin: 0;
-  padding-top: 35px; */
 }
 .main-content{
   font-size: 22px;
-  /* padding-left: 32px;
-  padding-top: 24px; */
   padding: 24px 32px;
   margin: 0;
 }
@@ -132,10 +128,7 @@
   font-size: 20px;
   padding-left: 64px;
 }
-/* .score-critiria :nth-child(2){
-  display:inline-block;
-  margin-bottom: 20px; 
-} */
+
 .score-input{
   color: #4156A6;
   background-color: #A0AAD2;
@@ -147,13 +140,15 @@
   width: 40px;
   font-size: 18px;
 }
-/* #outof{
-  float: right;
-  margin-right: 10px;
-  margin-top: 0;
-  margin-bottom: 0;
-} */
+.score-input:hover{
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
 #save-btn{
+  cursor: pointer;
   float: right;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+#save-btn:hover{
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
 }

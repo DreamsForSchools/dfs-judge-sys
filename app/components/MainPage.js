@@ -1,7 +1,6 @@
 var React = require('react');
 require('../mainpage.css');
-// require('../login.css')
-
+const SweetAlert = require('react-bootstrap-sweetalert');
 
 class MainPage extends React.Component{
   constructor(props){
@@ -24,7 +23,6 @@ class MainPage extends React.Component{
     this.setState({onScore: true});
     this.setState({onOverview: false});
   }
-
   // Set the score of the team object
   onScoreChange(id, e){
     this.props.team.setScore(id, parseInt(e.target.value));
@@ -34,11 +32,31 @@ class MainPage extends React.Component{
     var temp = this.props.team.calculateTotal();
     console.log(temp);
     this.setState({totalScore: temp});
+    alert("Score Saved!");
+  //   this.setState({
+  //     alert: (
+  //        <SweetAlert 
+  //         success 
+  //         title = "Woot!"
+  //         onConfirm = {
+  //             () => this.hideAlert()
+  //         } >
+  //         Hello world!
+  //         </SweetAlert>
+  //     )
+  // });
   }
-  // 
+  
   handleSubmit(){
-
   }
+
+  hideAlert() {
+    console.log('Hiding alert...');
+    this.setState({
+      alert: null
+    });
+  }
+
 
   render(){
     return (
@@ -46,7 +64,7 @@ class MainPage extends React.Component{
       <div className="mainpage-container">
 
         <div className="sidenav">
-          < img className="logo3" src={require('../assets/logo.png')}></img>
+          <img className="logo3" src={require('../assets/logo.png')}></img>
           <div className="team"><p className="team-num">{this.props.team.teamname}</p ></div>
           <button className="btn" type="button" onClick={this.handleSubmit}>Submit</button>
           
@@ -90,6 +108,16 @@ class MainPage extends React.Component{
               <label className="score-critiria-odd">1. On-stage presentation:</label>
               <input className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br>
               <button className="btn" id="save-btn" type="button" onClick={this.handleSave}>Save</button>
+              {/* <SavePopup></SavePopup> */}
+              {/* {<Button color="primary" disabled={this.state.notChange} onClick={() => this.showAlert('Save changes for client', '¿Are you sure?', () => this.updateCustomer, null) } >Save changes</Button>} */}
+              {/* <SweetAlert 
+	              success 
+	              title="Woot!" 
+	              onConfirm={this.hideAlert} 
+              > 
+ 	              I did it! 
+              </SweetAlert> */}
+              
             </div>}
           </div>
         </div>
