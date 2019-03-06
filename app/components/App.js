@@ -19,22 +19,22 @@
 
 // module.exports = App;
 
-var React = require('react');
-var Login = require('./Login');
-var MainPage = require('./MainPage');
-// var ReactRouter = require('react-router-dom');
-// var Router = ReactRouter.BrowserRouter;
-// var Route = ReactRouter.Route;
+// var React = require('react');
+// var Login = require('./Login');
+// var MainPage = require('./MainPage');
+// // var ReactRouter = require('react-router-dom');
+// // var Router = ReactRouter.BrowserRouter;
+// // var Route = ReactRouter.Route;
 
-class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state ={};
-  }
-  render(){
-    return (
-      <MainPage></MainPage>   
-    )
-  }
-}
-module.exports = App;
+// class App extends React.Component{
+//   constructor(props){
+//     super(props);
+//     this.state ={};
+//   }
+//   render(){
+//     return (
+//       <MainPage></MainPage>   
+//     )
+//   }
+// }
+// module.exports = App;
