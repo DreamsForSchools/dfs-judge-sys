@@ -143,7 +143,7 @@ class MainPage extends React.Component{
               <p className="main-header">App Name</p >
               <p className="main-content">{this.props.teams[this.state.currentTeamindex].appname}</p >
               <p className="main-header">App Description</p >
-              <p className="main-content">{this.props.team.description}</p >
+              <p className="main-content">{this.props.teams[this.state.currentTeamindex].description}</p >
             </div>}
             {this.state.onScore &&
             <div className="main-content-box">
