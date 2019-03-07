@@ -40,7 +40,7 @@ class MainPage extends React.Component{
   // Update Totoal Score after user clicking on "Save" button
   handleSave(){
 
-    var temp = this.props.teams[currentTeamindex].calculateTotal();
+    var temp = this.props.teams[this.state.currentTeamindex].totalScore;
     console.log(temp);
     this.setState({totalScore: temp});
 
@@ -141,7 +141,7 @@ class MainPage extends React.Component{
             <button className="tab-btn-overview"><img className="tab-overview-img"src={require('../assets/overview-selected.png')} onClick={this.onOverview}></img></button>
             <button className="tab-btn-score"><img className="tab-score-img"src={require('../assets/score-unselected.png')} onClick={this.onScore}></img></button>
             {/* <div className="fill"></div> */}
-            <div className="total-score">Total: {this.state.totalScore}/100</div>
+            <div className="total-score">Total: {this.props.teams[this.state.currentTeamindex].totalScore}/100</div>
 
           </div>
 
