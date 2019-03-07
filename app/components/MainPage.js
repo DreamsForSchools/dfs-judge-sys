@@ -7,17 +7,21 @@ class MainPage extends React.Component{
     super(props);
     this.state={onOverview: false, // set overview to default 
                 onScore: true,
+
                 totalScore: 0,
                 alert: null,
                 beforeCurrentindex:0,
                 currentTeamindex: 0,
                 currentclass: "team-tab"};
+
+
     this.onOverview = this.onOverview.bind(this);
     this.onScore = this.onScore.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createTeamcolumn = this.createTeamcolumn.bind(this);
     this.handleCurrentTeam = this.handleCurrentTeam.bind(this);
+
   }
   // Control Overview Tab
   onOverview(){
@@ -35,6 +39,7 @@ class MainPage extends React.Component{
   }
   // Update Totoal Score after user clicking on "Save" button
   handleSave(){
+
     var temp = this.props.teams[currentTeamindex].calculateTotal();
     console.log(temp);
     this.setState({totalScore: temp});
@@ -114,13 +119,14 @@ class MainPage extends React.Component{
           <img className="logo3" src={require('../assets/logo.png')}></img>
           <h1 className="team-label">Menu</h1>
 
+
           <div id = "allteamsdiv" className="team">
             {/*button className="team-tab-current" type="button">{this.props.teams[0].teamname}</button>*/}
             {this.createTeamcolumn()}
 
             {/*<button className="team-tab" type="button">Team 2</button>*/}
             <button className="team-tab-submit" type="button" onClick={this.handleSubmit}>Submit</button>
-  
+
           </div>
           
           {/* <button className="btn" type="button" onClick={this.handleSubmit}>Submit</button> */}
@@ -129,7 +135,9 @@ class MainPage extends React.Component{
 
         <div className="right-content">
           <div className="top-bar">
+
             <h1 className="top-header">Team: {this.props.teams[this.state.currentTeamindex].teamname}</h1>
+
             <button className="tab-btn-overview"><img className="tab-overview-img"src={require('../assets/overview-selected.png')} onClick={this.onOverview}></img></button>
             <button className="tab-btn-score"><img className="tab-score-img"src={require('../assets/score-unselected.png')} onClick={this.onScore}></img></button>
             {/* <div className="fill"></div> */}
@@ -142,12 +150,15 @@ class MainPage extends React.Component{
             <div className="main-content-box">
               <p className="main-header">App Name</p >
               <p className="main-content">{this.props.teams[this.state.currentTeamindex].appname}</p >
+
               <p className="main-header">App Description</p >
               <p className="main-content">{this.props.teams[this.state.currentTeamindex].description}</p >
             </div>}
             {this.state.onScore &&
             <div className="main-content-box">
+
               <p className="main-header-appname">{this.props.teams[this.state.currentTeamindex].appname}</p >
+
               <button className="save-btn" id="save-btn" type="button" onClick={this.handleSave}>Save</button>
               <p className="main-header">DESIGN-15 pts:</p >
               <label className="score-critiria-odd">1. UI/UX:</label>
@@ -167,7 +178,7 @@ class MainPage extends React.Component{
               <p className="main-header">PRESENTATION-10 pts:</p >
               <label className="score-critiria-odd">1. On-stage presentation:</label>
               <input className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br>
-              
+
               
             </div>}
 

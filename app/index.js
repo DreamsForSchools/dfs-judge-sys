@@ -6,6 +6,7 @@ import MainPage from './components/MainPage';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 var Team = require('./data/team');
+
 var Team1 = new Team("1",
                     "gogo",
                     "uber",
@@ -38,7 +39,9 @@ class App extends Component{
             
 
             {/* <Route path="/" exact={true} component={Login} /> */}
+
             <Route path="/" exact strict component={() => <MainPage teams={listofTeams}></MainPage>}/>
+
           </div>
         </Router>
           
