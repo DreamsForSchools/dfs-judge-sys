@@ -35,7 +35,7 @@ class MainPage extends React.Component{
   }
   // Set the score of the team object
   onScoreChange(id, e){
-    this.props.team.setScore(id, parseInt(e.target.value));
+    this.props.teams[this.state.currentTeamindex].setScore(scoretype, parseInt(e.target.value));
   }
   // Update Totoal Score after user clicking on "Save" button
   handleSave(){
