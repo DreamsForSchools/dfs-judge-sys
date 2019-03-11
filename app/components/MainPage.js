@@ -1,27 +1,32 @@
-var React = require('react');
+// var React = require('react');
+import React from 'react';
 require('../mainpage.css');
 var swal = require('sweetalert');
+import TeamPage from './TeamPage';
+import fire from './config/firebase';
+
+var db = fire.firestore();
+var eventRef = db.collection("events").doc("event19");
+var teamRef = eventRef.collection("teams");
+
 
 class MainPage extends React.Component{
   constructor(props){
     super(props);
-    this.state={onOverview: false, // set overview to default 
-                onScore: true,
-
+    this.state={
                 totalScore: 0,
                 alert: null,
-                beforeCurrentindex:0,
-                currentTeamindex: 0,
-                currentclass: "team-tab"};
+                prevTeamIndex:0,
+                currTeamIndex: 0,
+                currentclass: "team-tab",
+                currentTeam: 1
+                };
 
-
-    this.onOverview = this.onOverview.bind(this);
-    this.onScore = this.onScore.bind(this);
-    this.handleSave = this.handleSave.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.createTeamcolumn = this.createTeamcolumn.bind(this);
+    this.createTeamTab = this.createTeamTab.bind(this);
     this.handleCurrentTeam = this.handleCurrentTeam.bind(this);
-
+    this.signOut = this.signOut.bind(this);
+    this.renderTeamPage = this.renderTeamPage.bind(this);
   }
   // Control Overview Tab
   onOverview(){
@@ -35,24 +40,46 @@ class MainPage extends React.Component{
   }
   // Set the score of the team object
   onScoreChange(scoretype, e){
-    this.props.teams[this.state.currentTeamindex].setScore(scoretype, parseInt(e.target.value));
+    this.props.teams[this.state.currTeamIndex].setScore(scoretype, parseInt(e.target.value));
   }
   // Update Totoal Score after user clicking on "Save" button
   handleSave(){
 
-    var temp = this.props.teams[this.state.currentTeamindex].totalScore;
+    var temp = this.props.teams[this.state.currTeamIndex].totalScore;
     console.log(temp);
     this.setState({totalScore: temp});
-
     swal({
       title: "Score Saved!",
       text: "You still can modify any scores",
       icon: "success",
     });
-
   }
-  
+  // Sign out from account, go back to login page automatically 
+  signOut(){
+    fire.auth().signOut();
+  }
   handleSubmit(){
+    for (var i=0; i<this.props.teams.length; i++){
+      teamRef.doc(this.props.teams[i].teamname).set({
+
+        dscore1: this.props.teams[i].dscore1,
+        dscore2: this.props.teams[i].dscore2,
+        fscore1: this.props.teams[i].fscore1,
+        fscore2: this.props.teams[i].fscore2,
+        tscore1: this.props.teams[i].tscore1,
+        tscore2: this.props.teams[i].tscore2,
+        pscore1: this.props.teams[i].pscore1,
+        totalScore: this.props.teams[i].totalScore,
+
+      },{ merge : true});
+    }
+    // teamRef.set(this.props.teams).then(function(){
+    //   console.log("Document successfully written!");
+    // })
+    // .catch(function(error) {
+    //   console.error("Error writing document: ", error);
+    // });
+
     console.log('Hiding alert..');
 
     swal({
@@ -72,121 +99,79 @@ class MainPage extends React.Component{
       }
     });
   }
-
-  createTeamcolumn(){
-    teamColumns = [];
+  createTeamTab(){
+    // console.log("createteamtab");
+    // console.log("hahahrender teampage");
+    console.log("teams",this.props.teams);
+    var teamColumns = [];
     for (let i = 0; i < this.props.teams.length;i++){
-      teamColumns.push(<button name = "this" className= "team-tabs" type="button"  onClick={() => this.handleCurrentTeam(i)}> Team {i+1}</button>)
+      teamColumns.push(<button name = "this" id={i} className= "team-tab" type="button" onClick={() => this.handleCurrentTeam(i)}> Team {i+1}</button>)
     }
-    return teamColumns
+    // Set the className of first element in the tempColumns array to "team-tab-current"
+    var first = document.getElementById("0");
+    if (first != null){
+      if (first.id == this.state.currTeamIndex){
+        first.className = "team-tab-current";
+      }
+    }
+    // console.log("listofteam", listofTeams);
+    
+    return teamColumns;
   }
-
+  renderTeamPage(){
+    var temp =[];
+    for (let i = 0; i < this.props.teams.length; i++){
+      temp.push(<TeamPage team = {this.props.teams[i]}></TeamPage>);
+    }
+    // console.log(temp);
+    return temp[this.state.currTeamIndex];
+  }
   handleCurrentTeam(teamindex){
-    
-    // if (teamindex != this.state.currentTeamindex){
-    //   this.setState({currentclass:"team-tab-current"});
-    //   this.setState({currentTeamindex:teamindex})
-    // }
-    
-    this.setState({beforeCurrentindex:this.state.currentTeamindex})
-    this.setState({currentTeamindex:teamindex})
-    var btnsContainer = document.getElementById("allteamsdiv");
-    var btns = btnsContainer.getElementsByTagName("button");
-    btns[this.state.beforeCurrentindex].className = "team-tab"
-    btns[this.state.currentTeamindex].className = "team-tab-current"
-    
-    // for(let i = 0; i < btnsContainer.length; i++)
-    // {
-    //   if (i == currentTeamindex){
-    //     btns[i].className = "team-tab-current"
-    //   }else{
-    //     btns[i].className = "team-tab"
-    //   }
-    // }
-    
-
+    // Record current index
+    this.setState({prevTeamIndex:this.state.currTeamIndex});
+    this.setState({currTeamIndex:teamindex});
+    // Set the current Team tab to white background
+    var btn = document.getElementById(teamindex);
+    btn.className = "team-tab-current";
+    // Reset background after changing Team tab
+    var btns = document.getElementsByClassName("team-tab-current");
+    for (let a = 0; a < btns.length;a ++){
+      if (btns[a].className == "team-tab-current" && btns[a].id != teamindex){
+        btns[a].className = "team-tab";
+      }
+    }
   }
-
-
-
 
   render(){
     return (
 
       <div className="mainpage-container">
-
         <div className="sidenav">
           <img className="logo3" src={require('../assets/logo.png')}></img>
           <h1 className="team-label">Menu</h1>
-
-
           <div id = "allteamsdiv" className="team">
-            {/*button className="team-tab-current" type="button">{this.props.teams[0].teamname}</button>*/}
-            {this.createTeamcolumn()}
+            {this.createTeamTab()}
 
-            {/*<button className="team-tab" type="button">Team 2</button>*/}
             <button className="team-tab-submit" type="button" onClick={this.handleSubmit}>Submit</button>
+            <button className="team-tab-signout" type="button" onClick={this.signOut}>Sign Out</button>
 
-          </div>
-          
-          {/* <button className="btn" type="button" onClick={this.handleSubmit}>Submit</button> */}
-          
+          </div>          
         </div>
+        {/* {this.renderTeamPage()} */}
+        {this.state.currTeamIndex == 0 && <TeamPage team={this.props.teams[0]}></TeamPage>}
+        {this.state.currTeamIndex == 1 && <TeamPage team={this.props.teams[1]}></TeamPage>}
+        {this.state.currTeamIndex == 2 && <TeamPage team={this.props.teams[2]}></TeamPage>}
+        {/* {this.state.currTeamIndex == 3 && <TeamPage team={this.props.teams[3]}></TeamPage>}
+        {this.state.currTeamIndex == 4 && <TeamPage team={this.props.teams[4]}></TeamPage>}
+        {this.state.currTeamIndex == 5 && <TeamPage team={this.props.teams[5]}></TeamPage>}
 
-        <div className="right-content">
-          <div className="top-bar">
+        {this.state.currTeamIndex == 6 && <TeamPage team={this.props.teams[6]}></TeamPage>} */}
 
-            <h1 className="top-header">Team: {this.props.teams[this.state.currentTeamindex].teamname}</h1>
 
-            <button className="tab-btn-overview"><img className="tab-overview-img"src={require('../assets/overview-selected.png')} onClick={this.onOverview}></img></button>
-            <button className="tab-btn-score"><img className="tab-score-img"src={require('../assets/score-unselected.png')} onClick={this.onScore}></img></button>
-            {/* <div className="fill"></div> */}
-            <div className="total-score">Total: {this.props.teams[this.state.currentTeamindex].totalScore}/100</div>
 
-          </div>
-
-          <div className="main-container">
-            {this.state.onOverview && 
-            <div className="main-content-box">
-              <p className="main-header">App Name</p >
-              <p className="main-content">{this.props.teams[this.state.currentTeamindex].appname}</p >
-
-              <p className="main-header">App Description</p >
-              <p className="main-content">{this.props.teams[this.state.currentTeamindex].description}</p >
-            </div>}
-            {this.state.onScore &&
-            <div className="main-content-box">
-
-              <p className="main-header-appname">{this.props.teams[this.state.currentTeamindex].appname}</p >
-
-              <button className="save-btn" id="save-btn" type="button" onClick={this.handleSave}>Save</button>
-              <p className="main-header">DESIGN-15 pts:</p >
-              <label className="score-critiria-odd">1. UI/UX:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore1", e)}></input><br></br>
-              <label className="score-critiria">2. Cohesive look include:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore2", e)}></input><br></br>
-              <p className="main-header">FUNCTIONALITY-15 pts:</p >
-              <label className="score-critiria-odd">1. Usability/Bugs:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore1", e)}></input><br></br>
-              <label className="score-critiria">2. Standout Feature/technical sophistication:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore2", e)}></input><br></br>
-              <p className="main-header">THEME-15 pts:</p >
-              <label className="score-critiria-odd">1. Social Justice:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore1", e)}></input><br></br>
-              <label className="score-critiria">2. Creativity:</label>
-              <input className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore2", e)}></input><br></br>
-              <p className="main-header">PRESENTATION-10 pts:</p >
-              <label className="score-critiria-odd">1. On-stage presentation:</label>
-              <input className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br>
-
-              
-            </div>}
-
-          </div>
-        </div>
-  
       </div>
     );
   }
 }
-module.exports = MainPage;
+// module.exports = MainPage;
+export default MainPage;

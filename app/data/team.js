@@ -7,13 +7,13 @@ class Team {
     this.teamname = teamname;
     this.appname = appname;
     this.description = description;
-    this.dscore1 = 0;
-    this.dscore2 = 0;
-    this.fscore1 = 0;
-    this.fscore2 = 0;
-    this.tscore1 = 0;
-    this.tscore2 = 0;
-    this.pscore1 = 0;
+    this.dscore1 = null;
+    this.dscore2 = null;
+    this.fscore1 = null;
+    this.fscore2 = null;
+    this.tscore1 = null;
+    this.tscore2 = null;
+    this.pscore1 = null;
     this.totalScore = 0;
   }
   // Set score based on the score type (design, functionality, theme, presentation)
@@ -40,12 +40,33 @@ class Team {
     }else if (id == "pscore1") {
       this.pscore1 = e;
       this.calculateTotal();
-    }
-    
+    } 
   }
   calculateTotal(){
     this.totalScore = (this.dscore1 + this.dscore2 + this.fscore1 + this.fscore2 + this.tscore1 + this.tscore2 + this.pscore1);
+    if (isNaN(this.totalScore)){
+      this.totalScore = 0;
+    }
     return this.totalScore;
+  }
+  scoreValidate(){
+    // if (this.dscore1 == null){
+    //   return false;
+    // }else if (this.dscore2 = null){
+    //   return false;
+    // }else if (this.fscore1 = null){
+    //   return false;
+    // }else if (this.fscore2 = null){
+    //   return false;
+    // }else if (this.tscore1 = null){
+    //   return false;
+    // }else if (this.tscore2 = null){
+    //   return false;
+    // }else if (this.pscore1 = null){
+    //   return false;
+    // }else{
+    //   return true;
+    // }
   }
 }
 

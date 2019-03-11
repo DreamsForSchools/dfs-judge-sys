@@ -4,25 +4,28 @@
 .root-container{
   background-color: white;
   font-family: 'Rubik', sans-serif;
-  
+  height: 100%;
 }
 .sys-name{
   text-align: center;
   color: #4156A6;
   margin: 0;
 }
+.logo-container{
+  height: 20%;
+  margin-bottom: 15px;
+}
 .logo1{
   width: 206.76px;
-  /* height: auto; */
+  height: auto;
   display: block;
   margin: auto;
-  margin-bottom: 15px;
 }
 .login-box-container{
   background: #4156A6;
   margin: auto;
   width: 512px;
-  height: 377px;
+  height: 40%;
   border-radius: 10px;
   text-align: center;
 }

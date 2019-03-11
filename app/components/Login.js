@@ -3,6 +3,7 @@ import {
 	withRouter
 } from 'react-router-dom';
 require('../login.css');
+import fire from './config/firebase';
 
 class Login extends React.Component{
   constructor(props){
@@ -15,7 +16,10 @@ class Login extends React.Component{
   submitLogin(e){
     console.log(this.state);
     e.preventDefault()
-    this.props.history.push('/main');
+    // this.props.history.push('/main');
+    fire.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then((u)=>{}).catch((error)=>{
+      console.log(error);
+    });
   }
   onUsernameChange(e){
     this.setState({username: e.target.value});
@@ -48,9 +52,10 @@ class Login extends React.Component{
         <img className="logo2" src={require('../assets/dfs_logo_fullcolor_tagline.png')} alt="Logo"></img>
       </div>
          
-    )
+    );
   }
 }
 
 
-export default withRouter(Login);
+// export default withRouter(Login);
+export default Login;
