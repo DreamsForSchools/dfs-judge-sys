@@ -1,6 +1,6 @@
 var React = require('react');
 require('../mainpage.css');
-var swal = require('sweetalert');
+
 
 class TeamPage extends React.Component{
   constructor(props){
@@ -55,7 +55,7 @@ class TeamPage extends React.Component{
             <p className="main-header">App Description</p >
             <p className="main-content">{this.props.team.description}</p >
           </div>}
-          
+
           {this.state.onScore &&
           <div className="main-content-box">
             <p className="main-header-appname">{this.props.team.appname}</p >

@@ -3,7 +3,7 @@ import {
 	withRouter
 } from 'react-router-dom';
 require('../login.css');
-import fire from './config/firebase';
+import fire from './Firebase/firebase';
 
 class Login extends React.Component{
   constructor(props){

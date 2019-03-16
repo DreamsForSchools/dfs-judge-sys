@@ -42,6 +42,7 @@ class Team {
       this.calculateTotal();
     } 
   }
+  // Calculate total score 
   calculateTotal(){
     this.totalScore = (this.dscore1 + this.dscore2 + this.fscore1 + this.fscore2 + this.tscore1 + this.tscore2 + this.pscore1);
     if (isNaN(this.totalScore)){
@@ -50,23 +51,27 @@ class Team {
     return this.totalScore;
   }
   scoreValidate(){
-    // if (this.dscore1 == null){
-    //   return false;
-    // }else if (this.dscore2 = null){
-    //   return false;
-    // }else if (this.fscore1 = null){
-    //   return false;
-    // }else if (this.fscore2 = null){
-    //   return false;
-    // }else if (this.tscore1 = null){
-    //   return false;
-    // }else if (this.tscore2 = null){
-    //   return false;
-    // }else if (this.pscore1 = null){
-    //   return false;
-    // }else{
-    //   return true;
-    // }
+   
+   
+  }
+  isScoreComplete(){
+    if (this.dscore1 == null){
+      return false;
+    }else if (this.dscore2 = null){
+      return false;
+    }else if (this.fscore1 = null){
+      return false;
+    }else if (this.fscore2 = null){
+      return false;
+    }else if (this.tscore1 = null){
+      return false;
+    }else if (this.tscore2 = null){
+      return false;
+    }else if (this.pscore1 = null){
+      return false;
+    }else{
+      return true;
+    }
   }
 }
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 var ReactDOM = require('react-dom');
 import Login from './components/Login';
 import MainPage from './components/MainPage';
-import fire from './components/config/firebase';
+import fire from './components/Firebase/firebase';
 
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
@@ -64,9 +64,9 @@ class App extends Component{
       teams: []
     }
   }
+
+  // Retrieve data from firestore
   getTeamData(){
-    
-    // tempTeam = new Team[5];
     console.log("get team data...");
     teamRef.get().then(function(querySnapshot){
       listofTeams.pop();
@@ -77,22 +77,12 @@ class App extends Component{
       })
     })
     
-    
-    // this.setState({teams: tempTeam}, function(){
-    //   // console.log("state",this.state.teams);
-    //   console.log("listofteam", listofTeams);
-    //   // console.log('haha',JSON.stringify(tempTeam[0]));
-    // });
-    
   }
   componentDidMount(){
     this.authListener();
     this.getTeamData();
   }
-  
-  // componentWillUnmount(){
-  //   this.getTeamData();
-  // }
+
   authListener() {
     fire.auth().onAuthStateChanged ((user)=> {
       // console.log(user);
