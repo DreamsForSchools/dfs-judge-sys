@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
 html, body, #app, #app>div {
   height: 100%
 }
@@ -29,7 +30,8 @@ html, body, #app, #app>div {
 .team-tab-current{
   background: white;
   padding: 25px;
-  font-size: 120%;
+  font-weight: 400;
+  font-size: 140%;
   display: block;
   width: 100%;
   border: none;
@@ -39,7 +41,8 @@ html, body, #app, #app>div {
 .team-tab{
   background: #4156A6;
   padding: 25px;
-  font-size: 120%;
+  font-weight: 400;
+  font-size: 140%;
   display: block;
   width: 100%;
   border: none;
@@ -52,7 +55,8 @@ html, body, #app, #app>div {
 .team-tab-submit{
   background: #50E3C2;
   padding: 25px;
-  font-size: 120%;
+  font-weight: 400;
+  font-size: 140%;
   display: block;
   width: 100%;
   border: none;
@@ -65,7 +69,8 @@ html, body, #app, #app>div {
 .team-tab-signout{
   background: #4A90E2;
   padding: 25px;
-  font-size: 120%;
+  font-weight: 400;
+  font-size: 140%;
   display: block;
   width: 100%;
   border: none;
@@ -104,23 +109,30 @@ html, body, #app, #app>div {
   padding: 2% 5%;
 }
 .tab-btn{
-  color: #4156A6;
-  background-color: #D9DDED;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 450;
+  background-color: #4156A6;
+  color: #fff;
   border: none;
   padding: 1% 3%;
   margin-left: 5%;
-  margin-bottom: 2%;
+  margin-bottom: 1px;
+  /* position: absolute;
+  bottom: 0; */
   font-size: 100%;
   border-radius: 5px;
+
 }
 .tab-btn:hover{
   cursor: pointer;
-  background-color: #A0AAD2;
+  color: #4156A6;
+  background-color: #D9DDED;
 }
 
 .total-score{
   float: right;
   text-align: center;
+  /* font-size: 100%; */
   border-radius: 17.5px;
   background-color: #6479C8;
   padding: 5px 10px;
@@ -145,14 +157,16 @@ html, body, #app, #app>div {
 }
 .main-header{
   font-size: 120%;;
+  font-weight: 400;
   color: #4156A6;
-  padding-top: 5%;
+  padding-top: 3%;
   margin: 0; 
   padding-left: 5%;
 }
 .main-header-appname{
   display: inline-block;
-  font-size: 120%;;
+  font-weight: 500;
+  font-size: 140%;;
   color: #4156A6;
   padding-top: 5%;
   margin: 0; 
@@ -184,14 +198,30 @@ html, body, #app, #app>div {
   display: inline-block;
   margin-bottom: 10px;
   margin-top: 10px;
-  font-size: 100%;
+  font-size: 130%;
   padding-left: 5%;
+  padding-right: 5%;
+
 }
 .score-critiria{
   display: inline-block;
-  font-size: 100%;
+  font-size: 130%;
   padding-left: 5%;
+  padding-right: 5%;
+
 }
+.score-slider{
+  float: right;
+  margin-right: 5%;
+  background-color: #D9DDED;
+  color: #4156A6;
+  font-size: 100%;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  /* -webkit-appearance: button; */
+}
+
 .score-input{
   color: #4156A6;
   background-color: #D9DDED;
@@ -202,6 +232,65 @@ html, body, #app, #app>div {
   font-size: 100%;
   text-align: center;
 }
+.score-slider:hover{
+  cursor: pointer;
+}
 .score-input:hover{
   background-color: #D9DDED;
+}
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  /* float: right; */
+  vertical-align: middle;
+  margin: 6px; /* demo only */
+}
+
+.custom-dropdown select {
+  background-color: #D9DDED;
+  color: #4156A6;
+  font-size: inherit;
+  padding: .2em;
+  padding-right: 2.5em; 
+  border: 0;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+}
+
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.custom-dropdown::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before { /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+
+.custom-dropdown::before {
+  background-color: rgba(0,0,0,.10);
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.2);
 }

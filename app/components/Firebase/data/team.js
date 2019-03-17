@@ -57,21 +57,22 @@ class Team {
   isScoreComplete(){
     if (this.dscore1 == null){
       return false;
-    }else if (this.dscore2 = null){
+    }else if (this.dscore2 ==null){
       return false;
-    }else if (this.fscore1 = null){
+    }else if (this.fscore1 == null){
       return false;
-    }else if (this.fscore2 = null){
+    }else if (this.fscore2 == null){
       return false;
-    }else if (this.tscore1 = null){
+    }else if (this.tscore1 == null){
       return false;
-    }else if (this.tscore2 = null){
+    }else if (this.tscore2 == null){
       return false;
-    }else if (this.pscore1 = null){
+    }else if (this.pscore1 == null){
       return false;
     }else{
       return true;
     }
+    // return true;
   }
 }
 

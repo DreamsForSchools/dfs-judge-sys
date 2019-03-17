@@ -3,7 +3,15 @@ import {
 	withRouter
 } from 'react-router-dom';
 require('../login.css');
-import fire from './Firebase/firebase';
+// import Firebase from './Firebase/firebase';
+import { FirebaseContext } from './Firebase';
+
+const LoginPage = () =>(
+  <FirebaseContext.Consumer>
+    {firebase => <Login firebase={firebase}></Login>}
+  </FirebaseContext.Consumer>
+);
+
 
 class Login extends React.Component{
   constructor(props){
@@ -14,12 +22,11 @@ class Login extends React.Component{
   }
   
   submitLogin(e){
-    console.log(this.state);
-    e.preventDefault()
-    // this.props.history.push('/main');
-    fire.auth().signInWithEmailAndPassword(this.state.username, this.state.password).then((u)=>{}).catch((error)=>{
-      console.log(error);
-    });
+    // this.props.firebase.doSignInWithEmailAndPassword(this.state.username, this.state.password).then(()=>{console.log("correct")}).catch((error)=>{
+    //   console.log(error);
+    // });
+    this.props.firebase.doSignInWithEmailAndPassword(this.state.username, this.state.password);
+    e.preventDefault();
   }
   onUsernameChange(e){
     this.setState({username: e.target.value});
@@ -36,7 +43,7 @@ class Login extends React.Component{
         <div className="login-box-container">
           <div className="login-header">SIGN IN TO YOUR ACCOUNT</div>
 
-          <form onSubmit={this.submitLogin.bind(this)}>
+          <form method="post" onSubmit={this.submitLogin.bind(this)}>
             <div className="input-group">
               <input type="text" className="login-input"name="username" placeholder="JudgeName" 
                 onChange={this.onUsernameChange.bind(this)}/>
@@ -58,4 +65,5 @@ class Login extends React.Component{
 
 
 // export default withRouter(Login);
-export default Login;
+export default LoginPage;
+export {Login};

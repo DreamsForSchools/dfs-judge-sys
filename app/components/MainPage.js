@@ -1,16 +1,16 @@
-// var React = require('react');
+
 import React from 'react';
 require('../mainpage.css');
+import {
+	withRouter
+} from 'react-router-dom';
 var swal = require('sweetalert');
 import TeamPage from './TeamPage';
-import fire from './Firebase/firebase';
-
-var db = fire.firestore();
-var eventRef = db.collection("events").doc("event19");
-var teamRef = eventRef.collection("teams");
+// import Firebase from './Firebase/firebase';
+import { FirebaseContext } from './Firebase';
 
 
-class MainPage extends React.Component{
+class Main extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -19,7 +19,7 @@ class MainPage extends React.Component{
                 prevTeamIndex:0,
                 currTeamIndex: 0,
                 currentclass: "team-tab",
-                currentTeam: 1
+                currentTeam: 1,
                 };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +27,9 @@ class MainPage extends React.Component{
     this.handleCurrentTeam = this.handleCurrentTeam.bind(this);
     this.signOut = this.signOut.bind(this);
     this.renderTeamPage = this.renderTeamPage.bind(this);
+  }
+  componentDidMount(){
+    console.log(this.props.teams);
   }
   // Control Overview Tab
   onOverview(){
@@ -56,48 +59,49 @@ class MainPage extends React.Component{
   }
   // Sign out from account, go back to login page automatically 
   signOut(){
-    fire.auth().signOut();
+    console.log("signout");
+    this.props.firebase.signOut();
   }
   // Check for whether score is complete and then Write data in Firebase when clicking "Submit"
   handleSubmit(){
-    for (var i=0; i<this.props.teams.length; i++){
-      teamRef.doc(this.props.teams[i].teamname).set({
-        dscore1: this.props.teams[i].dscore1,
-        dscore2: this.props.teams[i].dscore2,
-        fscore1: this.props.teams[i].fscore1,
-        fscore2: this.props.teams[i].fscore2,
-        tscore1: this.props.teams[i].tscore1,
-        tscore2: this.props.teams[i].tscore2,
-        pscore1: this.props.teams[i].pscore1,
-        totalScore: this.props.teams[i].totalScore,
-
-      },{ merge : true}).then(function(){
-        console.log("Document successfully written!");
-      })
-      .catch(function(error){
-        console.error("Error writing document: ", error);
-      });
-    }
-  
-    console.log("isScoreComplete", this.props.teams[this.state.currTeamIndex].isScoreComplete());
-    //console.log('Hiding alert..');
-
-    swal({
-      title: "Are you sure to submit all the teams' score?",
-      text: "Once submitted, you will not be able to modify any scores!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willSubmit) => {
-      if (willSubmit) {
-        swal("Score Submitted!", {
-          icon: "success",
+    for (var i=0; i < this.props.teams.length; i++){
+      if (!this.props.teams[i].isScoreComplete()){
+        swal({
+          title: "You cannot submit scores",
+          text: "You have some unfinished score field",
+          icon: "warning",
+          button: true,
+        })
+      }else{
+        swal({
+          title: "Are you sure to submit all the teams' score?",
+          text: "Once submitted, you will not be able to modify any scores!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willSubmit) => {
+          if (willSubmit) {
+            swal("Score Submitted!", {
+              icon: "success",
+            });
+            for (var i=0; i < this.props.teams.length; i++){
+              this.props.firebase.addTeamsData(this.props.teams[i].teamname,
+                this.props.teams[i].dscore1,
+                this.props.teams[i].dscore2,
+                this.props.teams[i].fscore1,
+                this.props.teams[i].fscore2,
+                this.props.teams[i].tscore1,
+                this.props.teams[i].tscore2,
+                this.props.teams[i].pscore1,
+                this.props.teams[i].totalScore);
+            }
+          } else {
+            swal("Scores are not submitted!");
+          }
         });
-      } else {
-        swal("Scores are not submitted!");
       }
-    });
+    }
   }
   createTeamTab(){
     var teamColumns = [];
@@ -155,8 +159,8 @@ class MainPage extends React.Component{
         {/* {this.renderTeamPage()} */}
         {this.state.currTeamIndex == 0 && <TeamPage team={this.props.teams[0]}></TeamPage>}
         {this.state.currTeamIndex == 1 && <TeamPage team={this.props.teams[1]}></TeamPage>}
-        {this.state.currTeamIndex == 2 && <TeamPage team={this.props.teams[2]}></TeamPage>}
-        {this.state.currTeamIndex == 3 && <TeamPage team={this.props.teams[3]}></TeamPage>}
+        {/* {this.state.currTeamIndex == 2 && <TeamPage team={this.props.teams[2]}></TeamPage>} */}
+        {/* {this.state.currTeamIndex == 3 && <TeamPage team={this.props.teams[3]}></TeamPage>} */}
         {/* {this.state.currTeamIndex == 4 && <TeamPage team={this.props.teams[4]}></TeamPage>}
         {this.state.currTeamIndex == 5 && <TeamPage team={this.props.teams[5]}></TeamPage>}
 
@@ -169,4 +173,6 @@ class MainPage extends React.Component{
   }
 }
 // module.exports = MainPage;
-export default MainPage;
+// export default MainPage;
+export {Main};
+// export default withRouter(MainPage);

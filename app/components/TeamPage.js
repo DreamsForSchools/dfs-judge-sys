@@ -42,8 +42,9 @@ class TeamPage extends React.Component{
         <div className="top-bar">
 
           <h1 className="top-header">Team: {this.props.team.teamname}</h1>
-          <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
           <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
+          <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
+
           <div className="total-score">Total: {this.state.totalScore}/100</div>
 
         </div>
@@ -58,25 +59,177 @@ class TeamPage extends React.Component{
 
           {this.state.onScore &&
           <div className="main-content-box">
-            <p className="main-header-appname">{this.props.team.appname}</p >
+            <p className="main-header-appname">App Name: {this.props.team.appname}</p >
             <p className="main-header">DESIGN-15 pts:</p >
             <label className="score-critiria-odd">1. UI/UX:</label>
-            <input defaultValue={this.props.team.dscore1} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore1", e)}></input><br></br>
+
+            <span className="custom-dropdown">
+              <select required onChange={(e) => this.onScoreChange("dscore1", e)}>
+                <option value="" hidden>{this.props.team.dscore1}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.dscore1}>Current Score: {this.props.team.dscore1}</option> */}
+              </select>
+            </span>
+
+            <br></br>
+            {/* <input defaultValue={this.props.team.dscore1} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore1", e)}></input><br></br> */}
             <label className="score-critiria">2. Cohesive look include:</label>
-            <input defaultValue={this.props.team.dscore2} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore2", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required onChange={(e) => this.onScoreChange("dscore2", e)}>
+                <option value="" hidden>{this.props.team.dscore2}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.dscore2}>Current Score: {this.props.team.dscore2}</option> */}
+              </select>
+            </span>
+
+            {/* <input defaultValue={this.props.team.dscore2} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("dscore2", e)}></input><br></br> */}
             <p className="main-header">FUNCTIONALITY-15 pts:</p >
             <label className="score-critiria-odd">1. Usability/Bugs:</label>
-            <input defaultValue={this.props.team.fscore1} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore1", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required onChange={(e) => this.onScoreChange("fscore1", e)}>
+                <option value="" hidden>{this.props.team.fscore1}</option>
+
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.fscore1}>Current Score: {this.props.team.fscore1}</option> */}
+              </select>
+            </span>
+            <br></br>
+
+            {/* <input defaultValue={this.props.team.fscore1} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore1", e)}></input><br></br> */}
             <label className="score-critiria">2. Standout Feature/technical sophistication:</label>
-            <input defaultValue={this.props.team.fscore2} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore2", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required onChange={(e) => this.onScoreChange("fscore2", e)}>
+                <option value="" hidden>{this.props.team.fscore2}</option>
+
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.fscore2}>Current Score: {this.props.team.fscore2}</option> */}
+              </select>
+            </span>
+            {/* <input defaultValue={this.props.team.fscore2} className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("fscore2", e)}></input><br></br> */}
             <p className="main-header">THEME-15 pts:</p >
             <label className="score-critiria-odd">1. Social Justice:</label>
-            <input defaultValue={this.props.team.tscore1}className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore1", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required onChange={(e) => this.onScoreChange("tscore1", e)}>
+                <option value="" hidden>{this.props.team.tscore1}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.tscore1}>Current Score: {this.props.team.tscore1}</option> */}
+              </select>
+            </span>
+            <br></br>
+
+            {/* <input defaultValue={this.props.team.tscore1}className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore1", e)}></input><br></br> */}
             <label className="score-critiria">2. Creativity:</label>
-            <input defaultValue={this.props.team.tscore2}className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore2", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required className="score-slider"onChange={(e) => this.onScoreChange("tscore2", e)}>
+                <option value="" hidden>{this.props.team.tscore2}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                {/* <option selected="selected" value={this.props.team.tscore2}>Current Score: {this.props.team.tscore2}</option> */}
+              </select>
+            </span>
+            {/* <input defaultValue={this.props.team.tscore2}className="score-input" type="number"name="quantity"min="1"max="15" onChange={(e) => this.onScoreChange("tscore2", e)}></input><br></br> */}
             <p className="main-header">PRESENTATION-10 pts:</p >
             <label className="score-critiria-odd">1. On-stage presentation:</label>
-            <input defaultValue={this.props.team.pscore1}className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br>
+            <span className="custom-dropdown">
+              <select required className="score-slider" onChange={(e) => this.onScoreChange("pscore1", e)}>
+                <option value="" hidden>{this.props.team.pscore1}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                {/* <option selected="selected" value={this.props.team.pscore1}>Current Score: {this.props.team.pscore1}</option> */}
+              </select>
+            </span>
+            {/* <input defaultValue={this.props.team.pscore1}className="score-input"type="number"name="quantity"min="1"max="10" onChange={(e) => this.onScoreChange("pscore1", e)}></input><br></br> */}
           </div>}
         </div>
       </div> 
