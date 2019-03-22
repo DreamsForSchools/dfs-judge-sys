@@ -246,6 +246,13 @@ html, body, #app, #app>div {
   vertical-align: middle;
   margin: 6px; /* demo only */
 }
+.checkmarks {
+  height: auto;
+  width: 13%;
+  padding-top: 3px;
+  margin-left: 5%;
+  margin-bottom: 0px;
+}
 
 .custom-dropdown select {
   background-color: #D9DDED;

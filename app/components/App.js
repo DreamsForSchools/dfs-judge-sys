@@ -20,14 +20,20 @@ var Team = require('../components/Firebase/data/team');
 
 // var listofTeams = [Team1, Team2];
 var tempabc = [];
+//change 1
 const AppPage = () =>(
   <FirebaseContext.Consumer>
     {firebase => <App firebase={firebase} teams={firebase.getTeamsData()}></App>}
+    {/* {firebase => <App firebase={firebase} ></App>} */}
+
   </FirebaseContext.Consumer>
 );
+//change 2
 const MainPage= () =>(
   <FirebaseContext.Consumer>
     {firebase => <Main firebase={firebase} teams={tempabc}></Main>}
+    {/* {firebase => <Main firebase={firebase}></Main>} */}
+
   </FirebaseContext.Consumer>
 );
 class App extends Component{
@@ -38,6 +44,8 @@ class App extends Component{
       authUser: null,
       teams: this.props.teams
     }
+    //change 4
+    console.log("look", this.props.teams);
     tempabc = this.state.teams;
   }
 

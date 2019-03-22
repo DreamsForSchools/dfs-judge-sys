@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 var swal = require('sweetalert');
 import TeamPage from './TeamPage';
-// import Firebase from './Firebase/firebase';
+import greenchc from '../assets/green-check.png';
+import Firebase from './Firebase/firebase';
 import { FirebaseContext } from './Firebase';
 
 
@@ -20,17 +21,16 @@ class Main extends React.Component{
                 currTeamIndex: 0,
                 currentclass: "team-tab",
                 currentTeam: 1,
+                //teamsData: []
                 };
-
+    // console.log("liik",this.state.teamsData);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createTeamTab = this.createTeamTab.bind(this);
     this.handleCurrentTeam = this.handleCurrentTeam.bind(this);
     this.signOut = this.signOut.bind(this);
     this.renderTeamPage = this.renderTeamPage.bind(this);
   }
-  componentDidMount(){
-    console.log(this.props.teams);
-  }
+
   // Control Overview Tab
   onOverview(){
     this.setState({onOverview: true});
@@ -47,7 +47,6 @@ class Main extends React.Component{
   }
   // Update Totoal Score after user clicking on "Save" button
   handleSave(){
-
     var temp = this.props.teams[this.state.currTeamIndex].totalScore;
     console.log(temp);
     this.setState({totalScore: temp});
@@ -102,11 +101,22 @@ class Main extends React.Component{
         });
       }
     }
+    // var cmkrs = document.getElementsByClassName("checkmarks");
+    // if (this.props.teams[this.state.currTeamIndex].isScoreComplete()){
+    //   console.log(true);
+    //   cmkrs[this.state.currTeamIndex].src = greenchc;
+    // }
+    // var cmkrs = document.getElementsByClassName("checkmarks");
+
+    // if (this.props.teams[this.state.currTeamIndex].isScoreComplete()){
+    //     console.log(true)
+    //     cmkrs[this.state.currTeamIndex].src =  greenchc;
+    // }
   }
   createTeamTab(){
     var teamColumns = [];
     for (let i = 0; i < this.props.teams.length;i++){
-      teamColumns.push(<button name = "this" id={i} className= "team-tab" type="button" onClick={() => this.handleCurrentTeam(i)}> Team {i+1}</button>)
+      teamColumns.push(<button name = "this" id={i} className= "team-tab" type="button" onClick={() => this.handleCurrentTeam(i)}> Team {i+1}<img id="checkmark"className="checkmarks" src={require('../assets/gray-check.png')}></img></button>)
     }
     // Set the className of first element in the tempColumns array to "team-tab-current"
     var first = document.getElementById("0");
@@ -139,9 +149,16 @@ class Main extends React.Component{
         btns[a].className = "team-tab";
       }
     }
+    var cmkrs = document.getElementsByClassName("checkmarks");
+
+    if (this.props.teams[this.state.currTeamIndex].isScoreComplete()){
+        console.log(true)
+        cmkrs[this.state.currTeamIndex].src =  greenchc;
+    }
   }
 
   render(){
+   
     return (
 
       <div className="mainpage-container">
@@ -157,9 +174,11 @@ class Main extends React.Component{
           </div>          
         </div>
         {/* {this.renderTeamPage()} */}
+
         {this.state.currTeamIndex == 0 && <TeamPage team={this.props.teams[0]}></TeamPage>}
         {this.state.currTeamIndex == 1 && <TeamPage team={this.props.teams[1]}></TeamPage>}
-        {/* {this.state.currTeamIndex == 2 && <TeamPage team={this.props.teams[2]}></TeamPage>} */}
+        {this.state.currTeamIndex == 2 && <TeamPage team={this.props.teams[2]}></TeamPage>}
+        
         {/* {this.state.currTeamIndex == 3 && <TeamPage team={this.props.teams[3]}></TeamPage>} */}
         {/* {this.state.currTeamIndex == 4 && <TeamPage team={this.props.teams[4]}></TeamPage>}
         {this.state.currTeamIndex == 5 && <TeamPage team={this.props.teams[5]}></TeamPage>}
@@ -170,6 +189,9 @@ class Main extends React.Component{
 
       </div>
     );
+
+    
+    
   }
 }
 // module.exports = MainPage;
