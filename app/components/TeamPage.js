@@ -6,7 +6,7 @@ class TeamPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      onOverview: false, // set overview to default 
+      onOverview: false, 
       onScore: true,
       totalScore: 0,
       alert: null,

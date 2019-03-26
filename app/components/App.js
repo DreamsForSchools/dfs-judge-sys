@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import LoginPage from './Login';
 import {Main} from './MainPage';
-// import MainPage from './MainPage';
-import Firebase from './Firebase/firebase';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import LoginPage from './LoginPage';
+// import Firebase from './Firebase/firebase';
+// import {BrowserRouter as Router, Link} from 'react-router-dom';
+// import Route from 'react-router-dom/Route';
 import { FirebaseContext } from './Firebase';
-var Team = require('../components/Firebase/data/team');
+// var Team = require('../components/Firebase/data/team');
 // var Team1 = new Team("1",
 //                     "Gogo",
 //                     "uber",
@@ -28,11 +27,12 @@ const AppPage = () =>(
 
   </FirebaseContext.Consumer>
 );
-//change 2
-const MainPage= () =>(
+
+
+const MainPage = () =>(
   <FirebaseContext.Consumer>
     {firebase => <Main firebase={firebase} teams={tempabc}></Main>}
-    {/* {firebase => <Main firebase={firebase}></Main>} */}
+    {/* {firebase => <App firebase={firebase} ></App>} */}
 
   </FirebaseContext.Consumer>
 );
@@ -67,6 +67,7 @@ class App extends Component{
       return(
         <div>
           {/* <LoginPage></LoginPage> */}
+          {/* <MainGridPage></MainGridPage> */}
           {this.state.authUser ? (<MainPage></MainPage>) : (<LoginPage></LoginPage>)}
           {/* <MainPage></MainPage> */}
         </div>

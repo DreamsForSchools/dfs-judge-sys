@@ -1,90 +1,64 @@
-.body{
-  text-align: center;
-}
-.root-container{
-  background-color: white;
-  font-family: 'Rubik', sans-serif;
-  height: 100%;
-}
+
 .sys-name{
   text-align: center;
   color: #4156A6;
   margin: 0;
 }
-.logo-container{
-  height: 20%;
-  margin-bottom: 15px;
-}
-.logo1{
-  width: 206.76px;
+.login-logo1{
+  width: 40%;
+  max-width: 195px;
   height: auto;
-  display: block;
-  margin: auto;
+  margin-top: 20px;
 }
-.login-box-container{
-  background: #4156A6;
-  margin: auto;
-  width: 512px;
-  height: 40%;
-  border-radius: 10px;
-  text-align: center;
+div.login-row{
+  margin: 0;
 }
-.login-header{
-  font-size: 26px;
-  text-align: center;
-  padding: 42px 86px 33px 85px;
-  color: white;
-  /* height: auto; */
-  /* margin: 42px 86px 33px 85px; */
-  /* font-size: 150%;
-  color: white; */
-  /* padding: 50px; */
-  /* margin: 42px 86px 33px; */
-  
-}
-.login-input{
-  color: #D9DDED;
-  font-size: 21px;
+div.login-col{
   font-family: 'Rubik', sans-serif;
-  margin-bottom: 26px;
+  padding: 0;
+  text-align: center;
+}
+div.login-col.login-box{
+  background: #4156A6;
+  border-radius: 10px;
+}
+.signin-text{
+  color: white;
+  font-weight: 400;
+  font-size: 26px;
+  margin-top: 40px;
+}
+.login-input-field{
   background-color: #A0AAD2;
-  padding: 5px 15px; 
-  width: 316px;
-  height: 61px;
-  box-sizing: border-box; 
-  border-radius: 5px;
   border: none;   
+  display: block;
+  margin: 20px auto;
+  height: 60px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  width: 80%;
+  font-size: 21px;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #D9DDED;
-  font-family: 'Rubik', sans-serif;
   font-size: 21px;
 }
-.errmsg{
-  color:white;
-  margin-top: 0;
-}
-.login-btn{
+.login-submit{
   background-color: white; 
   color: #4156A6;
-  padding: 15px 32px;
-  margin: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 21px;
-  font-weight: bold;
-  border-radius: 5px;
+  padding: 10px 30px;
+  font-size: 25px;
+  font-weight: 450;
   border: none;
-  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 30px;
 }
-.login-btn:hover{
+.login-submit:hover{
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.28), 0 4px 15px 0 rgba(0, 0, 0, 0.25);
 }
-.logo2{
-  width: 196px;
-  display: block;
-  margin: auto;
-  margin-top: 48px;
+.login-logo2{
+  margin-top: 40px;
+  width: 50%;
+  max-width: 240px;
+  height: auto;
 }
-

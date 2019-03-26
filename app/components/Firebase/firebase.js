@@ -31,7 +31,7 @@ class Firebase{
     this.db = firebase.firestore();
   }
   doSignInWithEmailAndPassword(email, password){
-    this.auth.signInWithEmailAndPassword(email, password);
+    this.auth.signInWithEmailAndPassword(email, password)
   }
   signOut(){
     this.auth.signOut();
