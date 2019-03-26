@@ -275,7 +275,7 @@ class Main extends React.Component{
     for (var i = 0; i<this.props.teams.length; i++){
       teamPane.push(
         <Tab.Pane eventKey={i}>
-          <Container fluid={true}>
+          <Container className="pane-container"fluid={true}>
             <Row className="main-row">
               <Col className="main-col" sm={true}><h1 className="main-header">Team name - {this.props.teams[i].teamname}</h1></Col>
             </Row>

@@ -5,6 +5,7 @@ html, body, #app, #app>div {
 
 div.main-row{
   margin: 0;
+  height: 100%;
 }
 div.main-col{
   font-family: 'Rubik', sans-serif;
@@ -102,9 +103,16 @@ div.main-col.left{
 .custom-dropdown::after {
   color: rgba(0,0,0,.2);
 }
-
-div.container-fluid{
+div.fade.tab-pane.active.show{
+  height: 100%;
+  background: #D9DDED;
+}
+div.tab-content{
+  height: 100%;
+}
+div.pane-container{
   padding: 0;
+  background: #ffffff;
 }
 .main-teamname-header{
   color: #4156A6;
