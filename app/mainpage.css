@@ -35,8 +35,8 @@ div.main-col.left{
   font-size: 120%;
 }
 .nav-link.active{
-  color: #4156A6 !important;
-  background-color: #ffffff !important;
+  color: #ffffff !important;
+  background-color: #A0AAD2 !important;
 }
 .nav-link:hover{
   background-color: #6479C8;
