@@ -1,88 +1,78 @@
 import React, {Component} from 'react';
-import {Main} from './MainPage';
+import fire from './Firebase/firebase';
 import LoginPage from './LoginPage';
-// import Firebase from './Firebase/firebase';
-// import {BrowserRouter as Router, Link} from 'react-router-dom';
-// import Route from 'react-router-dom/Route';
-import { FirebaseContext } from './Firebase';
-// var Team = require('../components/Firebase/data/team');
-// var Team1 = new Team("1",
-//                     "Gogo",
-//                     "uber",
-//                     "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.",
-//                     0);
-// var Team2 = new Team("1",
-// "Gogo",
-// "uber",
-// "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.",
-// 0);
+import MainPage from './MainPage';
+var Team = require('./Firebase/data/team');
+require('firebase/auth');
 
-// var listofTeams = [Team1, Team2];
-var tempabc = [];
-//change 1
-const AppPage = () =>(
-  <FirebaseContext.Consumer>
-    {firebase => <App firebase={firebase} teams={firebase.getTeamsData()}></App>}
-    {/* {firebase => <App firebase={firebase} ></App>} */}
-
-  </FirebaseContext.Consumer>
-);
-
-
-const MainPage = () =>(
-  <FirebaseContext.Consumer>
-    {firebase => <Main firebase={firebase} teams={tempabc}></Main>}
-    {/* {firebase => <App firebase={firebase} ></App>} */}
-
-  </FirebaseContext.Consumer>
-);
-class App extends Component{
-  
+class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      authUser: null,
-      teams: this.props.teams
+      user: {},
+      teams: null,
+      userEmail: null
     }
-    //change 4
-    console.log("look", this.props.teams);
-    tempabc = this.state.teams;
+    this.db = fire.firestore();
   }
-
   componentDidMount(){
-    // console.log(this.props.firebase.getTeamsData);
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
+    this.authListener();
+    this.getTeamData();
+  }
+  getTeamData(userEmail){
+    console.log("calling get data", userEmail);
+    var docRef = this.db.collection('event-19').doc('judges');
+    docRef.get().then(function(doc){
+      if (doc.exists) {
+        var teamList = [];
+        console.log("Team data:", doc.data());
+        for (var x in doc.data()){
+          for (var y in doc.data()[x].teams){
+            var temp = new Team (doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription);
+            teamList.push(temp);
+          }
+          return (teamList);
+        }
+      } else{
+        console.log("No such document");
+      }
+    }).then(teamList=>{
+      this.setState({teams: teamList});
+    }).catch(function(error){
+      console.log("Error getting document:", error);
     });
   }
-  componentWillUnmount() {
-    this.listener();
-    
+  authListener() {
+    console.log("calling auth lis");
+    fire.auth().onAuthStateChanged ((user)=> {
+      if (user) {
+        this.setState({user});
+        this.setState({userEmail: user.email});
+        console.log("auth: ", user.email)
+        // return (userEmail);
+        // localStorage.setItem('user', user.uid);
+      } else{
+        this.setState({user: null});
+        // return (null);
+        // localStorage.removeItem('user');
+      }
+    })
+    // .then(userEmail=>{
+    //   this.getTeamData(userEmail);
+    // }).catch(function(error){
+    //   console.log("Error getting document:", error);
+    // });
   }
-
   render(){
-      
-      return(
-        <div>
-          {/* <LoginPage></LoginPage> */}
-          {/* <MainGridPage></MainGridPage> */}
-          {this.state.authUser ? (<MainPage></MainPage>) : (<LoginPage></LoginPage>)}
-          {/* <MainPage></MainPage> */}
-        </div>
-        
-
-      );
+    return(
+      <div>
+        {(this.state.user && this.state.teams)? <MainPage teams={this.state.teams}></MainPage> : <LoginPage></LoginPage>}
+      </div>
+    )
   }
 }
 
-export default AppPage;
-export {App};
+export default App;
 
-{/* <Router>
-          <div>
-          {this.user ? ((<Route path="/home" exact component={()=><MainPage teams={listofTeams}></MainPage>}></Route>)) 
-          : (<Route path="/" exact strict component={Login}></Route>)}
-          </div>
-        </Router> */}
+
+

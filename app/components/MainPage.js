@@ -7,39 +7,15 @@ import Col from 'react-bootstrap/Col';
 require('../mainpage.css');
 import greenchc from '../assets/green-check.png';
 var swal = require('sweetalert');
-var Team = require('./Firebase/data/team');
-var Team1 = new Team("1",
-                    "Gogo",
-                    "uber",
-                    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.",
-                    0);
-var Team2 = new Team("1",
-                      "Hi 2",
-                      "yooyo",
-                      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.",
-                      0);
+import fire from './Firebase/firebase';
+import * as firebase from 'firebase/app';
 
-var TeamList = [Team1, Team2];
-const SCORE_TYPE = ["dscore1", "dscore2"];
-
-// const MainGridPage = () =>(
-//   <FirebaseContext.Consumer>
-//     {firebase => <Haha firebase={firebase} teams={TeamList}></Haha>}
-//     {/* {firebase => <App firebase={firebase} ></App>} */}
-
-//   </FirebaseContext.Consumer>
-// );
-
-class Main extends React.Component{
+class MainPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
                 totalScore: 0,
                 alert: null,
-                prevTeamIndex:0,
-                currTeamIndex: 0,
-                currentclass: "team-tab",
-                currentTeam: 1,
                 onOverview: true,
                 onScore: false,
                 //teamsData: []
@@ -73,6 +49,7 @@ class Main extends React.Component{
         cmkrs[i].src =  greenchc;
     }
   }
+  // Submit score, pop up window to prevent error
   handleSubmit(){
     console.log("submit");
     for (var i=0; i < this.props.teams.length; i++){
@@ -97,7 +74,7 @@ class Main extends React.Component{
               icon: "success",
             });
             // for (var i=0; i < this.props.teams.length; i++){
-            //   this.props.firebase.addTeamsData(this.props.teams[i].teamname,
+            //   this.props.firebase.addTeamsData(this.props.teams[i].teamName,
             //     this.props.teams[i].dscore1,
             //     this.props.teams[i].dscore2,
             //     this.props.teams[i].fscore1,
@@ -115,7 +92,7 @@ class Main extends React.Component{
     }
   }
   handleSignOut(){
-    this.props.firebase.signOut();
+    fire.auth().signOut();
   }
   renderTeamTab(){
     var teamCol = [];
@@ -173,7 +150,7 @@ class Main extends React.Component{
   }
   renderScore(i){
     return(
-      <div className="main-contain-wrapper">
+      <div className="main-content-wrapper">
         <Container className="main-container" fluid={true}>
           <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">DESIGN - 30 Pts:</p></Col>
@@ -239,19 +216,19 @@ class Main extends React.Component{
   renderOverview(i){
     var overview = [];
     overview.push(
-      <div className="main-contain-wrapper">
+      <div className="main-content-wrapper">
         <Container className="main-container" fluid={true}>
           <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">App name</p></Col>
           </Row>
           <Row className="main-content-row">
-            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].appname}</p></Col>
+            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].appName}</p></Col>
           </Row>
           <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">App Description</p></Col>
           </Row>
           <Row className="main-content-row">
-            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].description}</p></Col>
+            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].appDescription}</p></Col>
           </Row>
           <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">MOBILE APPLICATION REQUIREMENTS:</p></Col>
@@ -277,7 +254,7 @@ class Main extends React.Component{
         <Tab.Pane eventKey={i}>
           <Container className="pane-container"fluid={true}>
             <Row className="main-row">
-              <Col className="main-col" sm={true}><h1 className="main-header">Team name - {this.props.teams[i].teamname}</h1></Col>
+              <Col className="main-col" sm={true}><h1 className="main-header">Team name - {this.props.teams[i].teamName}</h1></Col>
             </Row>
             <Row className="main-row">
               <Col className="main-col" sm={6}>
@@ -288,7 +265,6 @@ class Main extends React.Component{
               </Col>
               <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/100</div></Col>
               <Col className="main-col" sm={1}></Col>
-
             </Row>
             {this.state.onOverview && this.renderOverview(i)}
             {this.state.onScore && this.renderScore(i)}
@@ -326,6 +302,6 @@ class Main extends React.Component{
   }
 }
 
-export {Main};
-// export default MainGridPage;
+// export {Main};
+export default MainPage;
 

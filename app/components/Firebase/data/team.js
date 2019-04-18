@@ -2,11 +2,10 @@
 
 class Team {
   
-  constructor(id, teamname, appname, description){
-    this.id = id;
-    this.teamname = teamname;
-    this.appname = appname;
-    this.description = description;
+  constructor(teamName, appName, appDescription){
+    this.teamName = teamName;
+    this.appName = appName;
+    this.appDescription = appDescription;
     this.dscore1 = null;
     this.dscore2 = null;
     this.fscore1 = null;
@@ -50,10 +49,7 @@ class Team {
     }
     return this.totalScore;
   }
-  scoreValidate(){
-   
-   
-  }
+  // Check if every score fields is complete
   isScoreComplete(){
     if (this.dscore1 == null){
       return false;

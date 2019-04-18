@@ -3,16 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.css';
-import { FirebaseContext } from './Firebase';
 require('../login.css');
+import fire from './Firebase/firebase';
+require('firebase/auth');
 
-const LoginPage = () =>(
-  <FirebaseContext.Consumer>
-    {firebase => <Login firebase={firebase}></Login>}
-  </FirebaseContext.Consumer>
-);
-
-class Login extends React.Component{
+class LoginPage extends React.Component{
   constructor(props){
     super(props);
     this.state={email: "",
@@ -20,11 +15,16 @@ class Login extends React.Component{
                 accountInvalid: null};
   }
   submitLogin(e){
-    // this.props.firebase.doSignInWithEmailAndPassword(this.state.email, this.state.password).then(()=>{console.log("correct")}).catch((error)=>{
-    //   console.log(error);
+    e.preventDefault()
+    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{}).catch((error)=>{
+      console.log(error);
+      this.setState({accountInvalid: error});
+    });
+    // Dummy thing to avoid chrome console warning
+    // browser.runtime.onMessage.addListener(message => {
+    //   console.log("background: onMessage", message);
+    //   return Promise.resolve("Dummy response to keep the console quiet");
     // });
-    this.props.firebase.doSignInWithEmailAndPassword(this.state.email, this.state.password);
-    e.preventDefault();
   }
   onEmailChange(e){
     this.setState({email: e.target.value});
@@ -83,4 +83,4 @@ class Login extends React.Component{
   }
 }
 export default LoginPage;
-export {Login}
+// export {Login}
