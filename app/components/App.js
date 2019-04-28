@@ -11,28 +11,33 @@ class App extends Component {
     this.state = {
       user: {},
       teams: null,
-      userEmail: null
+      userEmail: null,
+      teamData: null
     }
     this.db = fire.firestore();
   }
   componentDidMount(){
     this.authListener();
     this.getTeamData();
+    //this.getTeamData();
   }
-  getTeamData(userEmail){
+  getJudgesData(userEmail){
     console.log("calling get data", userEmail);
     var docRef = this.db.collection('event-19').doc('judges');
     docRef.get().then(function(doc){
       if (doc.exists) {
         var teamList = [];
-        console.log("Team data:", doc.data());
+        console.log("Judge data:", doc.data());
         for (var x in doc.data()){
-          for (var y in doc.data()[x].teams){
-            var temp = new Team (doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription);
-            teamList.push(temp);
+          if (doc.data()[x].email == userEmail){
+            var judgeName = doc.data()[x].name;
+            for (var y in doc.data()[x].teams){
+              var temp = new Team (doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
+              teamList.push(temp);
+            }
           }
-          return (teamList);
         }
+        return (teamList);
       } else{
         console.log("No such document");
       }
@@ -42,31 +47,42 @@ class App extends Component {
       console.log("Error getting document:", error);
     });
   }
+  getTeamData(){
+    var docRef = this.db.collection('event-19').doc('teams');
+    docRef.get().then(function(doc){
+      if (doc.exists) {
+        var teamData = [];
+        console.log("Team data:", doc.data());
+        teamData = doc.data();
+        return (teamData);
+      } else{
+        console.log("No such document");
+      }
+    }).then(teamData=>{
+      this.setState({teamData: teamData});
+    }).catch(function(error){
+      console.log("Error getting document:", error);
+    });
+  }
   authListener() {
-    console.log("calling auth lis");
     fire.auth().onAuthStateChanged ((user)=> {
       if (user) {
         this.setState({user});
         this.setState({userEmail: user.email});
         console.log("auth: ", user.email)
-        // return (userEmail);
+        this.getJudgesData(user.email);
         // localStorage.setItem('user', user.uid);
       } else{
         this.setState({user: null});
-        // return (null);
         // localStorage.removeItem('user');
       }
     })
-    // .then(userEmail=>{
-    //   this.getTeamData(userEmail);
-    // }).catch(function(error){
-    //   console.log("Error getting document:", error);
-    // });
+    
   }
   render(){
     return(
       <div>
-        {(this.state.user && this.state.teams)? <MainPage teams={this.state.teams}></MainPage> : <LoginPage></LoginPage>}
+        {(this.state.user && this.state.teams && this.state.teamData)? <MainPage teams={this.state.teams} teamData={this.state.teamData}></MainPage> : <LoginPage></LoginPage>}
       </div>
     )
   }

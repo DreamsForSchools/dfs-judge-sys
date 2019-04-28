@@ -2,10 +2,11 @@
 
 class Team {
   
-  constructor(teamName, appName, appDescription){
+  constructor(teamName, appName, appDescription, judgeName){
     this.teamName = teamName;
     this.appName = appName;
     this.appDescription = appDescription;
+    this.judgeName = judgeName;
     this.dscore1 = null;
     this.dscore2 = null;
     this.fscore1 = null;
@@ -70,6 +71,7 @@ class Team {
     }
     // return true;
   }
+  
 }
 
 

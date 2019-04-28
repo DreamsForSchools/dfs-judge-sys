@@ -27,6 +27,8 @@ class MainPage extends React.Component{
     this.onScore = this.onScore.bind(this);
     this.renderOverview = this.renderOverview.bind(this);
     this.onScoreChange = this.onScoreChange.bind(this);
+    this.db = fire.firestore();
+    console.log("mainpagem team list: ", this.props.teams);
   }
   // Control Score Tab
   onScore(){
@@ -42,7 +44,6 @@ class MainPage extends React.Component{
   onScoreChange(i, scoretype, e){
     this.props.teams[i].setScore(scoretype, parseInt(e.target.value));
     this.setState({totalScore: this.props.teams[i].totalScore});
-
     // Check if all score fields are complete
     var cmkrs = document.getElementsByClassName("checkmarks");
     if (this.props.teams[i].isScoreComplete()){
@@ -51,7 +52,28 @@ class MainPage extends React.Component{
   }
   // Submit score, pop up window to prevent error
   handleSubmit(){
-    console.log("submit");
+    for (var x in this.props.teams){
+      var temp = {
+        judgeName: this.props.teams[x].judgeName,
+        dscore1:  this.props.teams[x].dscore1,
+        dscore2: this.props.teams[x].dscore1,
+        fscore1: this.props.teams[x].fscore1,
+        fscore2: this.props.teams[x].fscore2,
+        tscore1: this.props.teams[x].tscore1,
+        tscore2: this.props.teams[x].tscore2,
+        pscore1: this.props.teams[x].fscore1,
+        totalScore: this.props.teams[x].totalScore
+      }
+      var teamName = this.props.teams[x].teamName;
+      var stringof = teamName + ".scores."+ this.props.teams[x].judgeName;
+      var teamRef = this.db.collection('event-19').doc('teams');
+      teamRef.update({
+         [stringof]: temp
+      })
+      .then(function() {
+        console.log("Document successfully updated!");
+      });
+    }
     for (var i=0; i < this.props.teams.length; i++){
       if (!this.props.teams[i].isScoreComplete()){
         swal({
@@ -73,6 +95,9 @@ class MainPage extends React.Component{
             swal("Score Submitted!", {
               icon: "success",
             });
+            
+            // var docRef = this.db.collection('event-19').doc('judges');
+
             // for (var i=0; i < this.props.teams.length; i++){
             //   this.props.firebase.addTeamsData(this.props.teams[i].teamName,
             //     this.props.teams[i].dscore1,
