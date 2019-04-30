@@ -7,6 +7,9 @@ div.main-row{
   margin: 0;
   height: 100%;
 }
+div.main-row.top {
+  min-height: 65px;
+}
 div.main-col{
   font-family: 'Rubik', sans-serif;
   padding: 0;
@@ -24,7 +27,7 @@ div.main-col.left{
 .main-menu-label{
   color: white;
   padding: 20px;
-  margin: 0;
+  margin: 20px 0 0 0;
   font-size: 150%;
   font-weight: 400;
 }
@@ -57,10 +60,12 @@ div.main-col.left{
   margin: 6px; /* demo only */
 }
 .checkmarks {
+  min-width: 20px;
   height: auto;
   width: 15%;
   margin-left: 15px;
   margin-bottom: 5px;
+  max-width: 28px;
 }
 .custom-dropdown select {
   background-color: #D9DDED;
@@ -163,7 +168,13 @@ div.main-container{
   margin: 0;
 }
 .main-content.last{
+  padding-bottom: 30px;
+}
+.main-list{
   padding-bottom: 20px;
+  color: rgb(101, 102, 109);
+  font-size: 110%;
+  font-weight: 400;
 }
 div.main-content-row{
   margin: 0;
@@ -177,4 +188,8 @@ div.main-content-row{
 }
 small{
   color: rgb(116, 117, 122);
+}
+.swal-button{
+  border-color: #4156A6;
+  background-color: #6479C8;
 }

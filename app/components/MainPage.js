@@ -16,8 +16,8 @@ class MainPage extends React.Component{
     this.state={
                 totalScore: 0,
                 alert: null,
-                onOverview: true,
-                onScore: false,
+                onOverview: false,
+                onScore: true,
                 //teamsData: []
                 };
 
@@ -52,28 +52,6 @@ class MainPage extends React.Component{
   }
   // Submit score, pop up window to prevent error
   handleSubmit(){
-    for (var x in this.props.teams){
-      var temp = {
-        judgeName: this.props.teams[x].judgeName,
-        dscore1:  this.props.teams[x].dscore1,
-        dscore2: this.props.teams[x].dscore1,
-        fscore1: this.props.teams[x].fscore1,
-        fscore2: this.props.teams[x].fscore2,
-        tscore1: this.props.teams[x].tscore1,
-        tscore2: this.props.teams[x].tscore2,
-        pscore1: this.props.teams[x].fscore1,
-        totalScore: this.props.teams[x].totalScore
-      }
-      var teamName = this.props.teams[x].teamName;
-      var stringof = teamName + ".scores."+ this.props.teams[x].judgeName;
-      var teamRef = this.db.collection('event-19').doc('teams');
-      teamRef.update({
-         [stringof]: temp
-      })
-      .then(function() {
-        console.log("Document successfully updated!");
-      });
-    }
     for (var i=0; i < this.props.teams.length; i++){
       if (!this.props.teams[i].isScoreComplete()){
         swal({
@@ -95,20 +73,28 @@ class MainPage extends React.Component{
             swal("Score Submitted!", {
               icon: "success",
             });
-            
-            // var docRef = this.db.collection('event-19').doc('judges');
-
-            // for (var i=0; i < this.props.teams.length; i++){
-            //   this.props.firebase.addTeamsData(this.props.teams[i].teamName,
-            //     this.props.teams[i].dscore1,
-            //     this.props.teams[i].dscore2,
-            //     this.props.teams[i].fscore1,
-            //     this.props.teams[i].fscore2,
-            //     this.props.teams[i].tscore1,
-            //     this.props.teams[i].tscore2,
-            //     this.props.teams[i].pscore1,
-            //     this.props.teams[i].totalScore);
-            // }
+            for (var x in this.props.teams) {
+              var temp = {
+                judgeName: this.props.teams[x].judgeName,
+                dscore1: this.props.teams[x].dscore1,
+                dscore2: this.props.teams[x].dscore1,
+                fscore1: this.props.teams[x].fscore1,
+                fscore2: this.props.teams[x].fscore2,
+                tscore1: this.props.teams[x].tscore1,
+                tscore2: this.props.teams[x].tscore2,
+                pscore1: this.props.teams[x].fscore1,
+                totalScore: this.props.teams[x].totalScore
+              }
+              var teamName = this.props.teams[x].teamName;
+              var stringof = teamName + ".scores." + this.props.teams[x].judgeName;
+              var teamRef = this.db.collection('event-19').doc('teams');
+              teamRef.update({
+                [stringof]: temp
+              })
+              .then(function () {
+                console.log("Document successfully updated!");
+              });
+            }
           } else {
             swal("Scores are not submitted!");
           }
@@ -259,13 +245,17 @@ class MainPage extends React.Component{
             <Col className="main-content-col" sm={true}><p className="main-content-header">MOBILE APPLICATION REQUIREMENTS:</p></Col>
           </Row>
           <Row className="main-content-row">
-            <Col className="main-content-col" sm={true}><p className="main-content last">1. Application must be designed by AppJam+ students and be unique.
-              Stealing/Copying other ideas/methods is not acceptable.<br></br>
-              2. Application must compile and be error free. Bugs are OK (although not
-              recommended).<br></br>
-              3. Application must meet the theme of Social Justice: Environment.<br></br>
-              4. Application must partly include original graphics designed/created by AppJam+
-              students.</p></Col>
+            <Col className="main-content-col" sm={true}>
+              <ol type="i" className="main-list">
+                <li > Application must be designed by AppJam+ students and be unique.
+                  Stealing/Copying other ideas/methods is not acceptable.</li>
+                <li> Application must compile and be error free. Bugs are OK (although not
+                  recommended).</li>
+                <li> Application must meet the theme of Social Justice: Environment.</li>
+                <li>Application must partly include original graphics designed/created by AppJam+
+                  students.</li>
+              </ol>
+            </Col>
           </Row>
         </Container>
       </div>
@@ -278,10 +268,10 @@ class MainPage extends React.Component{
       teamPane.push(
         <Tab.Pane eventKey={i}>
           <Container className="pane-container"fluid={true}>
-            <Row className="main-row">
+            <Row className="main-row top">
               <Col className="main-col" sm={true}><h1 className="main-header">Team name - {this.props.teams[i].teamName}</h1></Col>
             </Row>
-            <Row className="main-row">
+            <Row className="main-row top">
               <Col className="main-col" sm={6}>
                 <button className="pane-tab"type="button" onClick={this.onScore}>Score</button>
                 <button className="pane-tab"type="button" onClick={this.onOverview}>Overview</button>
@@ -304,7 +294,7 @@ class MainPage extends React.Component{
     return(
       <Tab.Container id="left-tabs" defaultActiveKey="0">
         <Row className="main-row">
-          <Col className="main-col left"sm={2}>
+          <Col className="main-col left"sm={2} lg={2} xl={1}>
             <img className="main-logo" src={require('../assets/logo.png')}></img>
             <h1 className="main-menu-label">Teams</h1>
             <Nav variant="pills" className="flex-column">
@@ -316,7 +306,7 @@ class MainPage extends React.Component{
             </Nav>
           </Col>
 
-          <Col className="main-col"sm={10}>
+          <Col className="main-col" sm={10} lg={10} xl={11}>
             <Tab.Content>
               {this.renderTabPane()}
             </Tab.Content>
