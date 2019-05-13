@@ -17,8 +17,7 @@ class MainPage extends React.Component{
                 totalScore: 0,
                 alert: null,
                 onOverview: false,
-                onScore: true,
-                //teamsData: []
+                onScore: true
                 };
 
     this.handleSignOut = this.handleSignOut.bind(this);
@@ -28,7 +27,6 @@ class MainPage extends React.Component{
     this.renderOverview = this.renderOverview.bind(this);
     this.onScoreChange = this.onScoreChange.bind(this);
     this.db = fire.firestore();
-    console.log("mainpagem team list: ", this.props.teams);
   }
   // Control Score Tab
   onScore(){

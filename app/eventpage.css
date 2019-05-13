@@ -1,0 +1,86 @@
+.event-container{
+  padding: 0;
+  height: 100%;
+}
+.header-div{
+
+}
+.e-wrapper{
+  height: 100%;
+}
+.event-logo-div{
+  height:20%;
+  text-align: center;
+}
+
+.event-content{
+  height: 80%;
+  text-align: center;
+  background-color: #A0AAD2;
+}
+.event-logo1{
+  width: 40%;
+  max-width: 195px;
+  height: auto;
+}
+.event-header {
+  margin: 0;
+  color: #4156A6;
+  font-family: 'Rubik', sans-serif;
+  font-size: 180%;
+  font-weight: 500;
+  padding: 60px 0 20px 0;
+}
+.event-input {
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 15px 40px;
+  margin: 40px 0 0 0;
+  border: None;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
+}
+.event-btn {
+  margin: 40px 0 40px 0;
+  color: #4156A6;
+  font-weight: 500;
+  background: #ffffff;
+  padding: 5px 30px;
+  border: 3px solid #D9DDED;
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.75);
+}
+.event-btn.last{
+  margin-top:0;
+}
+.event-error {
+  color: #ffffff;
+  margin: 0;
+}
+
+.event-wrapper{
+  background-color: #A0AAD2;
+  height: 100%;
+}
+.event-row{
+  margin: 0;
+}
+.event-header-col{
+  text-align: center;
+  padding:0;
+}
+
+
+.logout-btn{
+  background: white;
+  float: right;
+  width:30%;
+  height: auto;
+  padding: 0;
+  border: none;
+  margin: 20px 10px 0 0;
+}
+.logout-img{
+  width: 100%;
+  height: auto;
+  max-width:40px;
+}
