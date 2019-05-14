@@ -1,160 +1,195 @@
-.logo3{
-  width: 205px;
-  display: block;
-  margin-left: 8px;
-  margin-top: 8px;
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
+html, body, #app, #app>div {
+  height: 100%
 }
-.sidenav {
+
+div.main-row{
+  margin: 0;
   height: 100%;
-  width: 221px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #4156A6;
-  overflow-x: hidden;
+}
+div.main-row.top {
+  min-height: 65px;
+}
+div.main-col{
   font-family: 'Rubik', sans-serif;
-  text-align: center;
-} 
-/* .team{
-  height: 45px;
-  width: 221px;
-  text-align: center;
-  display: block;
-  margin-top: 10px;
-} */
-.team-tab{
-  height: 45px;
-  width: 221px;
-  text-align: center;
-  display: block;
-  margin-top: 10px;
+  padding: 0;
+}
+div.main-col.left{
   background: #4156A6;
-  border: none;
-  font-size: 24px;
-  color: white;
-}
-.team-num{
-  margin: 0;
-  vertical-align: middle;
-  line-height: 45px; 
-  color: white;
-  font-size: 24px;
-}
-.submit-btn{
-  background-color: white;
-  border-radius: 10px;
-  width: 114px;
-  height: 50px;
-  border-width: 5px;
-  border-color: #D9DDED;
-  display: inline-block;
-  font-size: 24px;
-  color: #4156A6;
-  margin-top: 20px;
-}
-/* .sidenav a:hover {
-  background-color: #ddd;
-  color: black;
-} */
-.right-content {
-  margin-left: 221px;
-  position: fixed;
-  height: 100%;
-  font-family: 'Rubik', sans-serif;
-  top: 0;
-  right: 0;
-}
-.top-bar{
-  background: white;
-  height: 137px;
-  width: 803px;
-}
-.top-header{
-  font-size: 29px;
-  color: #4156A6;
-  padding-top: 22px;
-  padding-left: 51px;
-  margin: 0;
-}
-.tab-btn{
-  color: #4156A6;
   text-align: center;
-  font-size: 22px;
-  margin-left: 51px;
-  margin-top: 37px;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
+}
+.main-logo{
+  width: 80%;
+  height: auto;
+  margin: 20px 0 10px 0;
   display: inline-block;
-  background-color: #D9DDED;
+}
+.main-menu-label{
+  color: white;
+  padding: 20px;
+  margin: 20px 0 0 0;
+  font-size: 150%;
+  font-weight: 400;
+}
+.nav-link{
+  color: #ffffff;
+  background-color:#4156A6;
+  border-radius: 0 !important;
+  font-size: 120%;
+}
+.nav-link.active{
+  color: #4156A6 !important;
+  background-color: #ffffff !important;
+}
+.nav-link:hover{
+  background-color: #6479C8;
+  color: #ffffff;
 }
 .total-score{
   text-align: center;
-  font-size: 23px;
-  width: 187px;
-  float: right;
   border-radius: 17.5px;
-  background-color: #A0AAD2;
-  margin-top: 37px;
+  background-color: #6479C8;
+  padding: 5px 10px;
+  color: white;
+  margin-bottom: 10px;
+} 
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 6px; /* demo only */
 }
-.main-container{
-  background: #D9DDED;
-  height: 632px;
+.checkmarks {
+  min-width: 20px;
+  height: auto;
+  width: 15%;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  max-width: 28px;
+}
+.custom-dropdown select {
+  background-color: #D9DDED;
+  color: rgb(101, 102, 109);
+  font-size: inherit;
+  padding: .2em;
+  padding-right: 2.5em; 
+  border: 0;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+}
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.custom-dropdown::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+.custom-dropdown::before { /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
   bottom: 0;
-  padding: 70px 42px;
+  border-radius: 0 3px 3px 0;
 }
-.main-content-box{
-  background: white;
-  border-radius: 10px;
+.custom-dropdown::before {
+  background-color: rgba(0,0,0,.10);
 }
-.main-overview-header{
-  font-size: 22px;
-  color: #4156A6;
-  padding-top: 35px;
-  padding-left: 32px;
-  margin: 0;
+.custom-dropdown::after {
+  color: rgba(0,0,0,.2);
 }
-.main-overview-content{
-  font-size: 22px;
-  /* padding-left: 32px;
-  padding-top: 24px; */
-  padding: 24px 32px;
-  margin: 0;
+div.fade.tab-pane.active.show{
+  height: 100%;
+  background: #D9DDED;
 }
-.main-score-header{
-  font-size: 22px;
-  color: #4156A6;
-  padding-top: 35px;
-  padding-left: 32px;
-  margin: 0;
-  display: inline-block;
+div.tab-content{
+  height: 100%;
 }
-.main-socre-content-appname{
-  padding-top: 35px;
-  padding-right: 32px;
-  margin: 0;
-  float: right;
-  font-size: 22px;
-}
-.main-score-content{
-  padding-top: 35px;
-  padding-left: 32px;
-  margin: 0;
-  font-size: 20px;
-}
-
-.score-input{
-  color: #4156A6;
-  background-color: #A0AAD2;
-  border-radius: 5px;
-  border: none;
-  height: 24px;
+div.pane-container{
   padding: 0;
-  display: inline-block;
-  padding-right: 30px;
+  background: #ffffff;
 }
-.out-of{
-  float: right;
+.main-teamname-header{
+  color: #4156A6;
+  font-size: 180%;
+  font-weight: 500;
+  padding: 30px;
+}
+.main-header{
+  color: #4156A6;
+  font-size: 140%;
+  font-weight: 500;
+  padding: 20px 0 0 30px;
+}
+.pane-tab{
+  border-radius: 5px;
+  border-width: 3px;
+  border-color: #D9DDED;
+  color: #4156A6;
+  font-weight: 500;
+  margin: 5px 10px 10px 30px;
+}
+.pane-tab:hover{
+  cursor: pointer;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+}
+div.main-container{
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+}
+.main-content-wrapper{
+  background: #D9DDED;
+  padding: 30px;
+}
+.main-content-header{
+  color: #4156A6;
+  font-size: 120%;
+  font-weight: 470;
+  padding-top: 20px;
+  padding-left: 10px;
+}
+.main-content{
+  color: rgb(101, 102, 109);
+  font-size: 110%;
+  font-weight: 400;
+  padding-left: 20px;
+  padding-right: 10px;
   margin: 0;
+}
+.main-content.last{
+  padding-bottom: 30px;
+}
+.main-list{
+  padding-bottom: 20px;
+  color: rgb(101, 102, 109);
+  font-size: 110%;
+  font-weight: 400;
+}
+div.main-content-row{
+  margin: 0;
+}
+.main-content.pts{
+  color: rgb(101, 102, 109);
+  font-size: 110%;
+  font-weight: 400;
+  padding: 0 !important;
+  margin: 0;
+}
+small{
+  color: rgb(116, 117, 122);
+}
+.swal-button{
+  border-color: #4156A6;
+  background-color: #6479C8;
 }

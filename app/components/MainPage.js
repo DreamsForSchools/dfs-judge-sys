@@ -1,111 +1,320 @@
-var React = require('react');
-var Team = require('../components/Team');
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Tab from 'react-bootstrap/Tab';
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 require('../mainpage.css');
-
-
-var Teams = [{id: '1', appName: 'app jam', description: 'this is description', score: 'empty right now', select: false}, 
-            {id: '2', appName: 'app jam2', description: 'this is description2', score: 'score 2', select: false},
-            {id: '2', appName: 'app jam2', description: 'this is description2', score: 'score 2', select: false}];
-
-function getTeam(){
-  // TODO: GET TEAM FROM DATABASE 
-}
-var Team1 = new Team();
-// Generate Team Tab for each team in the Team Array (SHOULD USE NAV INSTEAD OF TAB)
-function TeamTab(){
-  const output = [];
-  for (var x = 0; x < Teams.length; x++){
-    output.push(<button className="team-tab"onClick={onTeam}>Team {x+1}</button>);
-  };
-  return output;
-};
-
-function onTeam(){
-};
+import greenchc from '../assets/green-check.png';
+var swal = require('sweetalert');
+import fire from './Firebase/firebase';
+import * as firebase from 'firebase/app';
 
 class MainPage extends React.Component{
   constructor(props){
     super(props);
-    this.state={onOverview: false, // set overview to default 
-                onScore: true,};
+    this.state={
+                totalScore: 0,
+                alert: null,
+                onOverview: false,
+                onScore: true
+                };
+
+    this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.onOverview = this.onOverview.bind(this);
     this.onScore = this.onScore.bind(this);
+    this.renderOverview = this.renderOverview.bind(this);
+    this.onScoreChange = this.onScoreChange.bind(this);
+    this.db = fire.firestore();
   }
-  onHaha(){
-    console.log("haaha")
-  }
-  onOverview(){
-    console.log("haha");
-    this.setState({onOverview: true});
-    this.setState({onScore: false});
-  }
+  // Control Score Tab
   onScore(){
     this.setState({onScore: true});
     this.setState({onOverview: false});
   }
+  // Control Overview Tab
+  onOverview(){
+    this.setState({onScore: false});
+    this.setState({onOverview: true});
+  }
+  // Set the score of the team object
+  onScoreChange(i, scoretype, e){
+    this.props.teams[i].setScore(scoretype, parseInt(e.target.value));
+    this.setState({totalScore: this.props.teams[i].totalScore});
+    // Check if all score fields are complete
+    var cmkrs = document.getElementsByClassName("checkmarks");
+    if (this.props.teams[i].isScoreComplete()){
+        cmkrs[i].src =  greenchc;
+    }
+  }
+  // Submit score, pop up window to prevent error
   handleSubmit(){
-    // Submit all score to database
-    
-    console.log("Submit clicked");
+    for (var i=0; i < this.props.teams.length; i++){
+      if (!this.props.teams[i].isScoreComplete()){
+        swal({
+          title: "You cannot submit scores",
+          text: "You have some unfinished score field",
+          icon: "warning",
+          button: true,
+        })
+      }else{
+        swal({
+          title: "Are you sure to submit all the teams' score?",
+          text: "Once submitted, you will not be able to modify any scores!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willSubmit) => {
+          if (willSubmit) {
+            swal("Score Submitted!", {
+              icon: "success",
+            });
+            for (var x in this.props.teams) {
+              var temp = {
+                judgeName: this.props.teams[x].judgeName,
+                dscore1: this.props.teams[x].dscore1,
+                dscore2: this.props.teams[x].dscore1,
+                fscore1: this.props.teams[x].fscore1,
+                fscore2: this.props.teams[x].fscore2,
+                tscore1: this.props.teams[x].tscore1,
+                tscore2: this.props.teams[x].tscore2,
+                pscore1: this.props.teams[x].fscore1,
+                totalScore: this.props.teams[x].totalScore
+              }
+              var teamName = this.props.teams[x].teamName;
+              var stringof = teamName + ".scores." + this.props.teams[x].judgeName;
+              var teamRef = this.db.collection('event-19').doc('teams');
+              teamRef.update({
+                [stringof]: temp
+              })
+              .then(function () {
+                console.log("Document successfully updated!");
+              });
+            }
+          } else {
+            swal("Scores are not submitted!");
+          }
+        });
+      }
+    }
   }
-  handleSave(){
-    // Save a team's score
-    alert("Score saved!");
-    console.log("Save clicked")
+  handleSignOut(){
+    fire.auth().signOut();
   }
-  render(){
-    return (
-      <div>
-        <Team>
-        </Team>
-        
+  renderTeamTab(){
+    var teamCol = [];
+    for (var i = 0; i < this.props.teams.length; i++){
+      teamCol.push(
+        <Nav.Item>
+          <Nav.Link eventKey={i} >Team {i+1}<img id="checkmark"className="checkmarks" src={require('../assets/gray-check.png')}></img></Nav.Link>
+        </Nav.Item>
+      );
+    }
+    return teamCol;
+  }
+  renderCustomDropdown15(scoreType, teamScore, i){
+    return(
+      <span className="custom-dropdown">
+        <select required onChange={(e) => this.onScoreChange(i, scoreType, e)}>
+          <option value="" hidden>{teamScore}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+        </select>
+      </span>
+    );
+  }
+  renderCustomDropdown10(scoreType, teamScore, i){
+    return(
+      <span className="custom-dropdown">
+        <select required onChange={(e) => this.onScoreChange(i, scoreType, e)}>
+          <option value="" hidden>{teamScore}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </span>
+    );
+  }
+  renderScore(i){
+    return(
+      <div className="main-content-wrapper">
+        <Container className="main-container" fluid={true}>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">DESIGN - 30 Pts:</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">1. UI/UX: Is the app easy to use and understand? Does it have an intuitive feel as to
+              how the app works and what to do next?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("dscore1", this.props.teams[i].dscore1, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">2. Do the graphics have a cohesive look?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("dscore2", this.props.teams[i].dscore2, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">FUNCTIONALITY - 30 Pts:</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">1. How usable is the app? Are there any bugs/issues that are noticeable?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("fscore1", this.props.teams[i].fscore1, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">2. Are there features of the app that make it stand out and add technical
+              sophistication?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("fscore2", this.props.teams[i].fscore2, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">THEME - 30 Pts:</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">1. How well does this app meet the Social Justice: Environment theme?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("tscore1", this.props.teams[i].tscore1, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content">2. How creative/unique is this application compared to others?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown15("tscore2", this.props.teams[i].tscore2, i)}
+            </Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">PRESENTATION - 10 Pts:</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={10}><p className="main-content last">1. How well was the on-stage presentation of the app by the team?<small> - 10 Pts</small></p></Col>
+            <Col className="main-content-col" sm={2}>
+              {this.renderCustomDropdown10("pscore1", this.props.teams[i].pscore1, i)}
+            </Col>
+          </Row>
+        </Container>
       </div>
-    )
-    
+    );
+
   }
-  // render(){
-  //   return (
+  renderOverview(i){
+    var overview = [];
+    overview.push(
+      <div className="main-content-wrapper">
+        <Container className="main-container" fluid={true}>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">App name</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].appName}</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">App Description</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content">{this.props.teams[i].appDescription}</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">MOBILE APPLICATION REQUIREMENTS:</p></Col>
+          </Row>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}>
+              <ol type="i" className="main-list">
+                <li > Application must be designed by AppJam+ students and be unique.
+                  Stealing/Copying other ideas/methods is not acceptable.</li>
+                <li> Application must compile and be error free. Bugs are OK (although not
+                  recommended).</li>
+                <li> Application must meet the theme of Social Justice: Environment.</li>
+                <li>Application must partly include original graphics designed/created by AppJam+
+                  students.</li>
+              </ol>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+    return overview;
+  }
+  renderTabPane(){
+    var teamPane = [];
+    for (var i = 0; i<this.props.teams.length; i++){
+      teamPane.push(
+        <Tab.Pane eventKey={i}>
+          <Container className="pane-container"fluid={true}>
+            <Row className="main-row top">
+              <Col className="main-col" sm={true}><h1 className="main-header">Team name - {this.props.teams[i].teamName}</h1></Col>
+            </Row>
+            <Row className="main-row top">
+              <Col className="main-col" sm={6}>
+                <button className="pane-tab"type="button" onClick={this.onScore}>Score</button>
+                <button className="pane-tab"type="button" onClick={this.onOverview}>Overview</button>
+              </Col>
+              <Col className="main-col" sm={3}>
+              </Col>
+              <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/100</div></Col>
+              <Col className="main-col" sm={1}></Col>
+            </Row>
+            {this.state.onOverview && this.renderOverview(i)}
+            {this.state.onScore && this.renderScore(i)}
+          </Container>
+        </Tab.Pane>
+      );
+    }
+    return teamPane;
+  }
 
-  //     <div className="mainpage-container">
+  render(){
+    return(
+      <Tab.Container id="left-tabs" defaultActiveKey="0">
+        <Row className="main-row">
+          <Col className="main-col left"sm={2} lg={2} xl={1}>
+            <img className="main-logo" src={require('../assets/logo.png')}></img>
+            <h1 className="main-menu-label">Teams</h1>
+            <Nav variant="pills" className="flex-column">
+              {this.renderTeamTab()}
+              <Nav.Item>
+                <Nav.Link onClick={this.handleSubmit}>Submit</Nav.Link>
+                <Nav.Link onClick={this.handleSignOut}>Sign Out</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
 
-  //       <div className="sidenav">
-  //         <img className="logo3" src={require('../assets/logo.png')}></img>
-  //         <TeamTab></TeamTab>
-  //         <button className="submit-btn" type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>          
-  //       </div>
-
-  //       <div className="right-content">
-  //         <div className="top-bar">
-  //           <p className="top-header">Team Name</p>
-  //           <button className="tab-btn"type="button" onClick={this.onOverview}>Overview</button>
-  //           <button className="tab-btn"type="button" onClick={this.onScore}>Score</button>
-  //           <div className="total-score">Total: 80/100</div>
-  //         </div>
-  //         <div className="main-container">
-  //           {this.state.onOverview && 
-
-  //           <div className="main-content-box">
-  //             <p className="main-overview-header">App Name</p>
-  //             <p className="main-overview-content">Judge View</p>
-  //             <p className="main-overview-header">App Description</p>
-  //             <p className="main-overview-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore eius quo quis quibusdam explicabo praesentium ut aliquam libero at ex! Alias voluptates optio obcaecati molestias placeat necessitatibus, cum tenetur quidem.</p>
-  //           </div>}
-  //           {this.state.onScore &&
-
-  //           <div className="main-content-box">
-  //             <p className="main-score-header">App name</p>
-  //             <p className="main-socre-content-appname">app name</p>
-  //             <div className="main-score-content">
-  //               <p className="score-header">DESIGN-15 pts:</p><br></br>
-  //               <label htmlFor="scorefield">1.  UI/UX: 	</label>
-  //               <input type="number" id="scorefield" className="score-input"placeholder=" "></input><p className="outof">/15</p>
-  //             </div>
-  //           </div>}  
-  //         </div>
-  //       </div>
-  
-  //     </div>
-  //   );
-  //}
+          <Col className="main-col" sm={10} lg={10} xl={11}>
+            <Tab.Content>
+              {this.renderTabPane()}
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
+    );
+  }
 }
-module.exports = MainPage;
+
+// export {Main};
+export default MainPage;
+
