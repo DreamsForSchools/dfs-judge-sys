@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "dfs-judging-app"
+  },
+  "targets": {
+    "dfs-test-40e96": {
+      "hosting": {
+        "judge": [
+          "dfs-test-40e96"
+        ]
+      }
+    }
+  }
+}
