@@ -103,7 +103,7 @@ class EventPage extends React.Component{
         </div>
           
         }
-        {(this.state.teams != null && this.state.teams.length != 0) && <MainPage teams={this.state.teams}></MainPage>}
+        {(this.state.teams != null && this.state.teams.length != 0) && <MainPage teams={this.state.teams} eventName={this.state.eventName}></MainPage>}
       </Container>
     );
   }

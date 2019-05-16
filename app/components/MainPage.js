@@ -85,7 +85,7 @@ class MainPage extends React.Component{
               }
               var teamName = this.props.teams[x].teamName;
               var stringof = teamName + ".scores." + this.props.teams[x].judgeName;
-              var teamRef = this.db.collection('event-19').doc('teams');
+              var teamRef = this.db.collection(this.props.eventName).doc('teams');
               teamRef.update({
                 [stringof]: temp
               })
