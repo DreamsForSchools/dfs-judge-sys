@@ -59,20 +59,20 @@ class LoginPage extends React.Component{
     //   return Promise.resolve("Dummy response to keep the console quiet");
     // });
   }
-  setEvent() {
-    var user = fire.auth().currentUser;
-    var eventName = this.state.eventName;
-    console.log("loook: ", this.state.eventName, user);
-    user.updateProfile({
-      displayName: eventName
-    }).then(function () {
-      // Update successful.
-      console.log("user profile updated!");
-    }).catch(function (error) {
-      // An error happened.
-      console.log("user profile updated failed :(", error);
-    });
-  }
+  // setEvent() {
+  //   var user = fire.auth().currentUser;
+  //   var eventName = this.state.eventName;
+  //   console.log("loook: ", this.state.eventName, user);
+  //   user.updateProfile({
+  //     displayName: eventName
+  //   }).then(function () {
+  //     // Update successful.
+  //     console.log("user profile updated!");
+  //   }).catch(function (error) {
+  //     // An error happened.
+  //     console.log("user profile updated failed :(", error);
+  //   });
+  // }
   render(){
     return (
       <Container fluid={true}>

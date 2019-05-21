@@ -28,17 +28,32 @@ class EventPage extends React.Component{
           var teamList = [];
           var imIn = false;
           for (var x in doc.data()) {
-            if (doc.data()[x].email == judgeEmail) {
-              teamList = [];
-              var imIn = true;
-              var judgeName = doc.data()[x].name;
-              for (var y in doc.data()[x].teams) {
-                var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
-                teamList.push(temp);
+            if (doc.data()[x].email != undefined){
+              var e = doc.data()[x].email;
+              var lowerCaseEmail = e.toLowerCase();
+              if (lowerCaseEmail == judgeEmail) {
+                teamList = [];
+                var imIn = true;
+                var judgeName = doc.data()[x].name;
+                for (var y in doc.data()[x].teams) {
+                  var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
+                  teamList.push(temp);
+                }
+              } else if (imIn == false) {
+                teamList = ["You are not in this event"];
               }
-            } else if (imIn == false) {
-              teamList = ["You are not in this event"];
             }
+            // if (doc.data()[x].email == judgeEmail) {
+            //   teamList = [];
+            //   var imIn = true;
+            //   var judgeName = doc.data()[x].name;
+            //   for (var y in doc.data()[x].teams) {
+            //     var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
+            //     teamList.push(temp);
+            //   }
+            // } else if (imIn == false) {
+            //   teamList = ["You are not in this event"];
+            // }
           }
           return teamList;
         } else {
