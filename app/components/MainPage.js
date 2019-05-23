@@ -108,7 +108,7 @@ class MainPage extends React.Component{
     for (var i = 0; i < this.props.teams.length; i++){
       teamCol.push(
         <Nav.Item>
-          <Nav.Link eventKey={i} >Team {i+1}<img id="checkmark"className="checkmarks" src={require('../assets/gray-check.png')}></img></Nav.Link>
+          <Nav.Link eventKey={i} >{this.props.teams[i].teamName}<img id="checkmark"className="checkmarks" src={require('../assets/gray-check.png')}></img></Nav.Link>
         </Nav.Item>
       );
     }
