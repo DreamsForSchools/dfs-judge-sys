@@ -59,6 +59,11 @@ div.main-col.left{
   vertical-align: middle;
   margin: 6px; /* demo only */
 }
+.judge-name {
+  margin-bottom: 0;
+  color: #4156A6;
+  font-family: 'Rubik',sans-serif;
+}
 .checkmarks {
   min-width: 20px;
   height: auto;

@@ -157,9 +157,10 @@ class MainPage extends React.Component{
       </span>
     );
   }
-  renderScore(i){
+  renderScore(i) {
     return(
       <div className="main-content-wrapper">
+        <p className="judge-name">Judge name: {this.props.teams[0].judgeName}</p>
         <Container className="main-container" fluid={true}>
           <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">DESIGN - 30 Pts:</p></Col>

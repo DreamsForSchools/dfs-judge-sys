@@ -43,17 +43,6 @@ class EventPage extends React.Component{
                 teamList = ["You are not in this event"];
               }
             }
-            // if (doc.data()[x].email == judgeEmail) {
-            //   teamList = [];
-            //   var imIn = true;
-            //   var judgeName = doc.data()[x].name;
-            //   for (var y in doc.data()[x].teams) {
-            //     var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
-            //     teamList.push(temp);
-            //   }
-            // } else if (imIn == false) {
-            //   teamList = ["You are not in this event"];
-            // }
           }
           return teamList;
         } else {
@@ -115,8 +104,7 @@ class EventPage extends React.Component{
               </Col>
             </Row>
           </div>
-        </div>
-          
+        </div> 
         }
         {(this.state.teams != null && this.state.teams.length != 0) && <MainPage teams={this.state.teams} eventName={this.state.eventName}></MainPage>}
       </Container>
