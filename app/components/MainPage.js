@@ -100,7 +100,7 @@ class MainPage extends React.Component{
       }
     }
   }
-  handleSignOut(){
+  handleSignOut() {
     fire.auth().signOut();
   }
   renderTeamTab(){
@@ -293,7 +293,7 @@ class MainPage extends React.Component{
     return(
       <Tab.Container id="left-tabs" defaultActiveKey="0">
         <Row className="main-row">
-          <Col className="main-col left"sm={2} lg={2} xl={1}>
+          <Col className="main-col left"sm={3} lg={2} xl={1}>
             <img className="main-logo" src={require('../assets/logo.png')}></img>
             <h1 className="main-menu-label">Teams</h1>
             <Nav variant="pills" className="flex-column">
@@ -305,7 +305,7 @@ class MainPage extends React.Component{
             </Nav>
           </Col>
 
-          <Col className="main-col" sm={10} lg={10} xl={11}>
+          <Col className="main-col" sm={9} lg={10} xl={11}>
             <Tab.Content>
               {this.renderTabPane()}
             </Tab.Content>
