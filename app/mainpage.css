@@ -198,3 +198,6 @@ small{
   border-color: #4156A6;
   background-color: #6479C8;
 }
+.main-container.presentation{
+  padding-bottom: 20px;
+}

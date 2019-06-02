@@ -20,6 +20,7 @@ class EventPage extends React.Component{
   }
   onEnterEvent() {
     // e.preventDefault();
+    
     var judgeEmail = this.props.judgeEmail;
     if (this.state.eventName != "") {
       var judgeRef = this.db.collection(this.state.eventName).doc('judges');
@@ -28,7 +29,8 @@ class EventPage extends React.Component{
           var teamList = [];
           var imIn = false;
           for (var x in doc.data()) {
-            if (doc.data()[x].email != undefined){
+            if (doc.data()[x].email != undefined) {
+              console.log(doc.data()[x])
               var e = doc.data()[x].email;
               var lowerCaseEmail = e.toLowerCase();
               if (lowerCaseEmail == judgeEmail) {

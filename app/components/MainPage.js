@@ -14,19 +14,25 @@ class MainPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
-                totalScore: 0,
-                alert: null,
-                onOverview: false,
-                onScore: true
+      totalScore: 0,
+      alert: null,
+      onOverview: false,
+      onScore: true,
+      allTeam: [],
+      onShowPresentation: false,
+      presentationScore: {}
                 };
-
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onOverview = this.onOverview.bind(this);
     this.onScore = this.onScore.bind(this);
     this.renderOverview = this.renderOverview.bind(this);
     this.onScoreChange = this.onScoreChange.bind(this);
+    this.onPresentationSubmit = this.onPresentationSubmit.bind(this);
     this.db = fire.firestore();
+    this.getTeamData = this.getTeamData.bind(this);
+    this.renderPresentationScore = this.renderPresentationScore.bind(this);
+    this.onPresentationScoreChange = this.onPresentationScoreChange.bind(this);
   }
   // Control Score Tab
   onScore(){
@@ -261,7 +267,7 @@ class MainPage extends React.Component{
     );
     return overview;
   }
-  renderTabPane(){
+  renderTabPane() {
     var teamPane = [];
     for (var i = 0; i<this.props.teams.length; i++){
       teamPane.push(
@@ -286,7 +292,136 @@ class MainPage extends React.Component{
         </Tab.Pane>
       );
     }
+    var presentation = 
+      <Tab.Pane eventKey="presentation">
+        <Container className="pane-container" fluid={true}>
+          <Row className="main-row top">
+            <Col className="main-col" sm={true}><h1 className="main-header">Stage presentation scores</h1></Col>
+          </Row>
+          <Row className="main-row top">
+            <Col className="main-col" sm={6}>
+              <button className="pane-tab" type="button" onClick={(e)=> this.onPresentationSubmit(e)}>Submit</button>
+            </Col>
+            <Col className="main-col" sm={3}>
+            </Col>
+            {/* <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/100</div></Col> */}
+            <Col className="main-col" sm={3}></Col>
+          </Row>
+          {this.state.onShowPresentation && this.renderPresentationScore()}
+        </Container>
+      </Tab.Pane>
+    teamPane.push(presentation);
     return teamPane;
+  }
+  onPresentationScoreChange(teamName, e) {
+    var copyData = this.state.presentationScore;
+    copyData[teamName] = parseInt(e.target.value);
+    this.setState({ presentationScore: copyData });
+  }
+  
+  renderPresentationDropDown(teamName) {
+    return (
+      <span className="custom-dropdown">
+        <select required onChange={(e) => this.onPresentationScoreChange(teamName, e)}>
+          {/* <option value="" hidden></option> */}
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </span>
+    )
+  }
+  renderPresentationScore() {
+    var temp = [];
+    for (var x in this.state.allTeam) {
+      temp.push(<Col className="main-content-col" sm={10}><p className="main-content">{this.state.allTeam[x]}</p></Col>, <Col className="main-content-col" sm={2}>{this.renderPresentationDropDown(this.state.allTeam[x])}</Col>);
+    }
+    return(
+      <div className="main-content-wrapper">
+        <Container className="main-container presentation" fluid={true}>
+          <Row className="main-content-row">
+            <Col className="main-content-col" sm={true}><p className="main-content-header">Please enter presentation scores for each team and click submit button above</p></Col>
+          </Row>
+          <Row className="main-content-row">{temp}</Row>
+        </Container>
+      </div>
+    )
+  }
+  onPresentationSubmit() {
+    var size = Object.keys(this.state.presentationScore).length;
+    if (size != this.state.allTeam.length) {
+      swal({
+        title: "You cannot submit presentation scores",
+        text: "You have some unfinished score field",
+        icon: "warning",
+        button: true,
+      })
+
+    } else {
+      swal({
+        title: "Are you sure to submit all the teams' presentationn score?",
+        text: "Once submitted, you will not be able to modify any scores!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willSubmit) => {
+          if (willSubmit) {
+            swal("Score Submitted!", {
+              icon: "success",
+            });
+            for (const [key, value] of Object.entries(this.state.presentationScore)) {
+              // var temp = {
+              //   judgeName: this.props.teams[0].judgeName,
+              //   presentationScore: value
+              // }
+              // console.log("temp", temp);
+              var teamName = key;
+              var stringof = teamName + ".presentationScores." + this.props.teams[0].judgeName;
+              var teamRef = this.db.collection(this.props.eventName).doc('teams');
+              teamRef.update({
+                [stringof]: value
+              })
+                .then(function () {
+                  console.log("presentation scores successfully updated!");
+                });
+            }
+          } else {
+            swal("Scores are not submitted!");
+          }
+        });
+      
+    }
+
+  }
+  getTeamData() {
+    console.log("calling get team data", this.props.eventName);
+    
+    var teamRef = this.db.collection(this.props.eventName).doc('teams');
+    teamRef.get().then(function (doc) {
+      if (doc.exists) {
+        var allTeam = [];
+        for (var t in doc.data()) {
+          if (doc.data()[t].teamName != undefined) {
+            allTeam.push(doc.data()[t].teamName);
+          }
+        }
+        return allTeam;
+      }
+    }).then(allTeam => {
+      console.log("all team names: ", allTeam);
+      this.setState({ allTeam: allTeam, onShowPresentation: true });
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
   }
 
   render(){
@@ -299,6 +434,7 @@ class MainPage extends React.Component{
             <Nav variant="pills" className="flex-column">
               {this.renderTeamTab()}
               <Nav.Item>
+                <Nav.Link eventKey="presentation" onClick={this.getTeamData}>Presentation Score</Nav.Link>
                 <Nav.Link onClick={this.handleSubmit}>Submit</Nav.Link>
                 <Nav.Link onClick={this.handleSignOut}>Sign Out</Nav.Link>
               </Nav.Item>
@@ -316,6 +452,5 @@ class MainPage extends React.Component{
   }
 }
 
-// export {Main};
 export default MainPage;
 
