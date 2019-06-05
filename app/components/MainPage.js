@@ -1108,17 +1108,12 @@ class MainPage extends React.Component {
                 <Nav.Link eventKey="presentation" onClick={this.getTeamData}>Presentation Score</Nav.Link>
                 {/*<Nav.Link onClick={this.handleSubmit}>Submit</Nav.Link>*/}
                 <Nav.Link type="button"
-                  onClick={this.handleSignOut}
-                  style={{
-                    color: "#4156A6",
-                    marginTop: "250%",
-                    backgroundColor: "#d9dded",
-                    borderRadius: "20px"
-                    /*padding: "2px"*/
-}}>
-                  Sign Out
+                          onClick={this.handleSignOut} 
+                          className = "main-sign-out">
+                          Sign Out
                           </Nav.Link>
               </Nav.Item>
+              
             </Nav>
           </Col>
 
