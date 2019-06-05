@@ -216,14 +216,15 @@ class EventPage extends React.Component {
                 console.log('data[1][team_name].scores[judgeName].fscore2', data[1][team_name].scores[judgeName].fscore2);
                 console.log('data[1][team_name].scores[judgeName].tscore1', data[1][team_name].scores[judgeName].tscore1);
                 console.log('data[1][team_name].scores[judgeName].tscore2', data[1][team_name].scores[judgeName].tscore2);
-                console.log('data[1][team_name].presentationScores[judgeName]', data[1][team_name].presentationScores[judgeName]);
+                //console.log('data[1][team_name].presentationScores[judgeName]', data[1][team_name].presentationScores[judgeName]);
                 var td1 = data[1][team_name].scores[judgeName].dscore1;
                 var td2 = data[1][team_name].scores[judgeName].dscore2;
                 var tf1 = data[1][team_name].scores[judgeName].fscore1;
                 var tf2 = data[1][team_name].scores[judgeName].fscore2;
                 var tt1 = data[1][team_name].scores[judgeName].tscore1;
                 var tt2 = data[1][team_name].scores[judgeName].tscore2;
-                var pscore = data[1][team_name].presentationScores[judgeName];
+                //var pscore = data[1][team_name].presentationScores[judgeName];
+                var pscore = 0;
                 var ts = data[1][team_name].scores[judgeName].totalScore;
 
                 // console.log('team\'s scores by judge ', judgeName, ': ', data[1][team_name][scores][judgeName]);

@@ -961,7 +961,7 @@ class MainPage extends React.Component {
           </Row>
           <Row className="main-row top">
             <Col className="main-col" sm={6}>
-              <button className="pane-tab" type="button" onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>
+              {/* <button className="pane-tab" type="button" onClick={(e) => this.onPresentationSubmit(e)}>Submit</button> */}
             </Col>
             <Col className="main-col" sm={3}>
             </Col>
@@ -1009,9 +1009,19 @@ class MainPage extends React.Component {
       <div className="main-content-wrapper">
         <Container className="main-container presentation" fluid={true}>
           <Row className="main-content-row">
-            <Col className="main-content-col" sm={true}><p className="main-content-header">Please enter presentation scores for each team and click submit button above</p></Col>
+            <Col className="main-content-col" sm={true}><p className="main-content-header">Please enter presentation scores for each team and click submit button below</p></Col>
           </Row>
           <Row className="main-content-row">{temp}</Row>
+          <button className="pane-tab"
+          type="button"
+          style={{
+            marginLeft: "80%",
+            backgroundColor: "#4156A6",
+            color: "#FFFFFF",
+            padding: "10px",
+            borderRadius: "20%"
+          }}
+          onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>
         </Container>
       </div>
     )
