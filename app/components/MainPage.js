@@ -33,7 +33,6 @@ class MainPage extends React.Component{
     this.getTeamData = this.getTeamData.bind(this);
     this.renderPresentationScore = this.renderPresentationScore.bind(this);
     this.onPresentationScoreChange = this.onPresentationScoreChange.bind(this);
-    console.log("teamData: ", this.props.teams);
   }
   // Control Score Tab
   onScore(){
@@ -56,8 +55,8 @@ class MainPage extends React.Component{
     }
   }
   // Submit score, pop up window to prevent error
-  handleSubmit(){
-    for (var i=0; i < this.props.teams.length; i++){
+  handleSubmit(i){
+   
       if (!this.props.teams[i].isScoreComplete()){
         swal({
           title: "You cannot submit scores",
@@ -78,20 +77,20 @@ class MainPage extends React.Component{
             swal("Score Submitted!", {
               icon: "success",
             });
-            for (var x in this.props.teams) {
+           
               var temp = {
-                judgeName: this.props.teams[x].judgeName,
-                dscore1: this.props.teams[x].dscore1,
-                dscore2: this.props.teams[x].dscore1,
-                fscore1: this.props.teams[x].fscore1,
-                fscore2: this.props.teams[x].fscore2,
-                tscore1: this.props.teams[x].tscore1,
-                tscore2: this.props.teams[x].tscore2,
-                pscore1: this.props.teams[x].fscore1,
-                totalScore: this.props.teams[x].totalScore
+                judgeName: this.props.teams[i].judgeName,
+                dscore1: this.props.teams[i].dscore1,
+                dscore2: this.props.teams[i].dscore1,
+                fscore1: this.props.teams[i].fscore1,
+                fscore2: this.props.teams[i].fscore2,
+                tscore1: this.props.teams[i].tscore1,
+                tscore2: this.props.teams[i].tscore2,
+                pscore1: this.props.teams[i].fscore1,
+                totalScore: this.props.teams[i].totalScore
               }
-              var teamName = this.props.teams[x].teamName;
-              var stringof = teamName + ".scores." + this.props.teams[x].judgeName;
+              var teamName = this.props.teams[i].teamName;
+              var stringof = teamName + ".scores." + this.props.teams[i].judgeName;
               var teamRef = this.db.collection(this.props.eventName).doc('teams');
               teamRef.update({
                 [stringof]: temp
@@ -99,18 +98,19 @@ class MainPage extends React.Component{
               .then(function () {
                 console.log("Document successfully updated!");
               });
-            }
+            
           } else {
             swal("Scores are not submitted!");
           }
         });
       }
-    }
+    
   }
   handleSignOut() {
     fire.auth().signOut();
   }
   renderTeamTab(){
+    console.log("calling get team data", this.props.teams);
     var teamCol = [];
     for (var i = 0; i < this.props.teams.length; i++){
       teamCol.push(
@@ -122,10 +122,37 @@ class MainPage extends React.Component{
     return teamCol;
   }
   renderCustomDropdown15(scoreType, teamScore, i){
+    // var passedScore = ''
+    // if (scoreType == 'dscore1') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].dscore1;
+    //         console.log(this.props.teams[i].dscore1)
+    //       }
+    //       else if (scoreType == 'dscore2') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].dscore2;
+    //       }
+    //       else if (scoreType == 'fscore1') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].fscore1;
+    //       }
+    //       else if (scoreType == 'fscore2') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].fscore2;
+    //       }
+    //       else if (scoreType == 'tscore1') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].tscore1;
+    //       }
+    //       else if (scoreType == 'tscore2') {
+    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+    //         passedScore = this.props.teams[i].tscore2;
+    //       }
+    //       else { console.log('scoreType was passed as ', scoreType, ' in renderNumInputField()'); }
     return(
       <span className="custom-dropdown">
         <select required onChange={(e) => this.onScoreChange(i, scoreType, e)}>
-          <option value="" hidden>{teamScore}</option>
+          <option value="" >{teamScore}</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -145,7 +172,7 @@ class MainPage extends React.Component{
       </span>
     );
   }
-  renderCustomDropdown10(scoreType, teamScore, i) {
+  renderCustomDropdown10(scoreType, teamScore, i){
     return(
       <span className="custom-dropdown">
         <select required onChange={(e) => this.onScoreChange(i, scoreType, e)}>
@@ -165,6 +192,7 @@ class MainPage extends React.Component{
     );
   }
   renderScore(i) {
+    console.log("score", this.props.teams)
     return(
       <div className="main-content-wrapper">
         <p className="judge-name">Judge name: {this.props.teams[0].judgeName}</p>
@@ -216,7 +244,7 @@ class MainPage extends React.Component{
               {this.renderCustomDropdown15("tscore2", this.props.teams[i].tscore2, i)}
             </Col>
           </Row>
-          <Row className="main-content-row">
+          {/* <Row className="main-content-row">
             <Col className="main-content-col" sm={true}><p className="main-content-header">PRESENTATION - 10 Pts:</p></Col>
           </Row>
           <Row className="main-content-row">
@@ -224,9 +252,19 @@ class MainPage extends React.Component{
             <Col className="main-content-col" sm={2}>
               {this.renderCustomDropdown10("pscore1", this.props.teams[i].pscore1, i)}
             </Col>
-          </Row>
+          </Row> */}
         </Container>
-      </div>
+          <button className="pane-tab"
+          type="button"
+          style={{
+            marginLeft: "80%",
+            backgroundColor: "#4156A6",
+            color: "#FFFFFF",
+            padding: "10px",
+            borderRadius: "20%"
+          }}
+          onClick={(e) => this.handleSubmit(i,e)}>Submit</button>
+       </div>
     );
 
   }
@@ -300,9 +338,9 @@ class MainPage extends React.Component{
             <Col className="main-col" sm={true}><h1 className="main-header">Stage presentation scores</h1></Col>
           </Row>
           <Row className="main-row top">
-            <Col className="main-col" sm={6}>
+            {/* <Col className="main-col" sm={6}>
               <button className="pane-tab" type="button" onClick={(e)=> this.onPresentationSubmit(e)}>Submit</button>
-            </Col>
+            </Col> */}
             <Col className="main-col" sm={3}>
             </Col>
             {/* <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/100</div></Col> */}
@@ -310,6 +348,16 @@ class MainPage extends React.Component{
           </Row>
           {this.state.onShowPresentation && this.renderPresentationScore()}
         </Container>
+        <button className="pane-tab"
+          type="button"
+          style={{
+            marginLeft: "80%",
+            backgroundColor: "#4156A6",
+            color: "#FFFFFF",
+            padding: "10px",
+            borderRadius: "20%"
+          }}
+          onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>
       </Tab.Pane>
     teamPane.push(presentation);
     return teamPane;
@@ -404,7 +452,7 @@ class MainPage extends React.Component{
 
   }
   getTeamData() {
-    console.log("calling get team data", this.props.eventName);
+    console.log("calling get team data", this.props.eventName, this.props.teams);
     
     var teamRef = this.db.collection(this.props.eventName).doc('teams');
     teamRef.get().then(function (doc) {
@@ -436,8 +484,11 @@ class MainPage extends React.Component{
               {this.renderTeamTab()}
               <Nav.Item>
                 <Nav.Link eventKey="presentation" onClick={this.getTeamData}>Presentation Score</Nav.Link>
-                <Nav.Link onClick={this.handleSubmit}>Submit</Nav.Link>
-                <Nav.Link onClick={this.handleSignOut}>Sign Out</Nav.Link>
+                <Nav.Link type="button"
+                          onClick={this.handleSignOut} 
+                          className = "main-sign-out">
+                          Sign Out
+                          </Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>

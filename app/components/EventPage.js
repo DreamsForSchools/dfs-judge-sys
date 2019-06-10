@@ -4,6 +4,7 @@ require('../eventpage.css');
 import fire from './Firebase/firebase';
 var Team = require('./Firebase/data/team');
 import MainPage from './MainPage';
+import { runInThisContext } from 'vm';
 
 class EventPage extends React.Component{
   constructor(props){
@@ -29,7 +30,7 @@ class EventPage extends React.Component{
           if (t != 'irrelevant') {
             for (var s in doc.data()[t]['scores']) {
               if (s == judgeName) {
-                for (let b = 0; b < teamList.length; b++) {
+                for (let b = 0; b < teamList.length; b++){
                   if (t == teamList[b].teamName) {
                     teamList[b].dscore1 = doc.data()[t]['scores'][s].dscore1;
                     teamList[b].dscore2 = doc.data()[t]['scores'][s].dscore1;
@@ -37,6 +38,7 @@ class EventPage extends React.Component{
                     teamList[b].fscore2 = doc.data()[t]['scores'][s].fscore2;
                     teamList[b].tscore1 = doc.data()[t]['scores'][s].tscore1;
                     teamList[b].tscore2 = doc.data()[t]['scores'][s].tscore2;
+                    teamList[b].totalScore = doc.data()[t]['scores'][s].totalScore;
                   }
                 }
               }

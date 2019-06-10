@@ -7,7 +7,7 @@ class Team {
     this.appName = appName;
     this.appDescription = appDescription;
     this.judgeName = judgeName;
-    this.dscore1 = null;
+    this.dscore1 = 1;
     this.dscore2 = null;
     this.fscore1 = null;
     this.fscore2 = null;
@@ -52,19 +52,35 @@ class Team {
   }
   // Check if every score fields is complete
   isScoreComplete(){
-    if (this.dscore1 == null){
+    // if (this.dscore1 == null){
+    //   return false;
+    // }else if (this.dscore2 ==null){
+    //   return false;
+    // }else if (this.fscore1 == null){
+    //   return false;
+    // }else if (this.fscore2 == null){
+    //   return false;
+    // }else if (this.tscore1 == null){
+    //   return false;
+    // }else if (this.tscore2 == null){
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    
+    if (this.dscore1 == 0) {
       return false;
-    }else if (this.dscore2 ==null){
+    }else if (this.dscore2 == 0){
       return false;
-    }else if (this.fscore1 == null){
+    }else if (this.fscore1 == 0){
       return false;
-    }else if (this.fscore2 == null){
+    }else if (this.fscore2 == 0){
       return false;
-    }else if (this.tscore1 == null){
+    }else if (this.tscore1 == 0){
       return false;
-    }else if (this.tscore2 == null){
+    }else if (this.tscore2 == 0){
       return false;
-    }else if (this.pscore1 == null){
+    }else if (this.pscore1 == 0){
       return false;
     }else{
       return true;
