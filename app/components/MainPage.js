@@ -617,7 +617,6 @@ class MainPage extends React.Component {
     }
   }
   handleSignOut() {
-    console.log('clicked signout button');
     swal({
       title: "Are you sure?",
       text: "Signing out without having filled out your scores will not submit them for you.",
@@ -651,89 +650,6 @@ class MainPage extends React.Component {
     return teamCol;
   }
 
-  renderNumInputField(scoreType, teamScore, i, disable) {
-    if (this.state.debugBool == true) {
-      // console.log('in renderNumInputField()');
-
-    }
-
-    var passedScore = '';
-
-    if (scoreType == 'dscore1') {
-      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].dscore1;
-    }
-    else if (scoreType == 'dscore2') {
-      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].dscore2;
-    }
-    else if (scoreType == 'fscore1') {
-      if (this.state.debudebugBoolgbool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].fscore1;
-    }
-    else if (scoreType == 'fscore2') {
-      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].fscore2;
-    }
-    else if (scoreType == 'tscore1') {
-      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].tscore1;
-    }
-    else if (scoreType == 'tscore2') {
-      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-      passedScore = this.props.teams[i].tscore2;
-    }
-    else { console.log('scoreType was passed as ', scoreType, ' in renderNumInputField()'); }
-
-    if ((this.state.debugBool == true)) {
-      console.log('in rCD1()');
-      console.log('parameters passed:');
-      console.log('scoreType and type: ', scoreType, typeof (scoreType));
-      console.log('teamScore: ', teamScore);
-      console.log('i: ', i);
-      // console.log('dscore1:   ', this.props.teams[i].dscore1);
-      console.log('passedScore: ', passedScore);
-      console.log(' ')
-    }
-
-    return (
-      <NumericInput
-        // onInput={(e) => this.onBoxScoreChange(i, scoreType, e)}
-        min={0}
-        value={passedScore}
-        max={15}
-        step={1}
-        size="2"
-        disabled={false}
-        mobile
-        format={myBasicFormat}
-        onInput={e =>
-          this.onBoxScoreChange(
-            i, scoreType, e)
-        }
-        style={{
-          wrap: {
-            background: '#E2E2E2',
-            boxShadow: '0 0 1px 1px #fff inset, 1px 1px 5px -1px #000',
-            padding: '2px 2.26ex 2px 2px',
-            borderRadius: '6px 3px 3px 6px',
-            fontSize: '32'
-          },
-          input: {
-            borderRadius: '4px 2px 2px 4px',
-            // color: '#988869',
-            padding: '0.1ex 1ex',
-            border: '1px solid #ccc',
-            marginRight: '4',
-            display: 'block',
-            fontWeight: '100',
-            textShadow: '1px 1px 1px rgba(0, 0, 0, 0.1)'
-          }
-        }}>{}
-      </NumericInput>
-    );
-  }
-
   renderCustomDropdown15(scoreType, teamScore, i) {
     var passedScore = '';
 
@@ -746,7 +662,7 @@ class MainPage extends React.Component {
       passedScore = this.props.teams[i].dscore2;
     }
     else if (scoreType == 'fscore1') {
-      if (this.state.debudebugBoolgbool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
+      if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
       passedScore = this.props.teams[i].fscore1;
     }
     else if (scoreType == 'fscore2') {
