@@ -3,11 +3,10 @@ html, body, #app, #app>div {
   height: 100%
 }
 .main-sign-out{
-    color: #d9dded;
+    color: #ffffff !important; 
     margin-top: 40%;
-    background-color: #ffffff;
-  
- 
+    background-color: #D9DDED !important;
+
 }
 
 div.main-row{
