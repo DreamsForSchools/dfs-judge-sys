@@ -122,37 +122,10 @@ class MainPage extends React.Component{
     return teamCol;
   }
   renderCustomDropdown15(scoreType, teamScore, i){
-    // var passedScore = ''
-    // if (scoreType == 'dscore1') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].dscore1;
-    //         console.log(this.props.teams[i].dscore1)
-    //       }
-    //       else if (scoreType == 'dscore2') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].dscore2;
-    //       }
-    //       else if (scoreType == 'fscore1') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].fscore1;
-    //       }
-    //       else if (scoreType == 'fscore2') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].fscore2;
-    //       }
-    //       else if (scoreType == 'tscore1') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].tscore1;
-    //       }
-    //       else if (scoreType == 'tscore2') {
-    //         //if (this.state.debugBool) { console.log(scoreType, 'passed as scoretype in renderNumInputField()'); }
-    //         passedScore = this.props.teams[i].tscore2;
-    //       }
-    //       else { console.log('scoreType was passed as ', scoreType, ' in renderNumInputField()'); }
     return(
       <span className="custom-dropdown">
         <select required onChange={(e) => this.onScoreChange(i, scoreType, e)}>
-          <option value="" >{teamScore}</option>
+          <option value=""hidden >{teamScore}</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -239,7 +212,7 @@ class MainPage extends React.Component{
             </Col>
           </Row>
           <Row className="main-content-row">
-            <Col className="main-content-col" sm={10}><p className="main-content">2. How creative/unique is this application compared to others?<small> - 15 Pts</small></p></Col>
+            <Col className="main-content-col" sm={10}><p className="main-content last">2. How creative/unique is this application compared to others?<small> - 15 Pts</small></p></Col>
             <Col className="main-content-col" sm={2}>
               {this.renderCustomDropdown15("tscore2", this.props.teams[i].tscore2, i)}
             </Col>
