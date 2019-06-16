@@ -33,7 +33,7 @@ class EventPage extends React.Component{
                 for (let b = 0; b < teamList.length; b++){
                   if (t == teamList[b].teamName) {
                     teamList[b].dscore1 = doc.data()[t]['scores'][s].dscore1;
-                    teamList[b].dscore2 = doc.data()[t]['scores'][s].dscore1;
+                    teamList[b].dscore2 = doc.data()[t]['scores'][s].dscore2;
                     teamList[b].fscore1 = doc.data()[t]['scores'][s].fscore1;
                     teamList[b].fscore2 = doc.data()[t]['scores'][s].fscore2;
                     teamList[b].tscore1 = doc.data()[t]['scores'][s].tscore1;
@@ -66,12 +66,13 @@ class EventPage extends React.Component{
             if (doc.data()[x].email != undefined) {
               var e = doc.data()[x].email;
               var lowerCaseEmail = e.toLowerCase();
+              var password = doc.data()[x].password;
               if (lowerCaseEmail == judgeEmail) {
                 teamList = [];
                 var imIn = true;
                 var judgeName = doc.data()[x].name;
                 for (var y in doc.data()[x].teams) {
-                  var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName);
+                  var temp = new Team(doc.data()[x].teams[y].teamName, doc.data()[x].teams[y].appName, doc.data()[x].teams[y].appDescription, judgeName, e, password);
                   teamList.push(temp);
                 }
               } else if (imIn == false) {

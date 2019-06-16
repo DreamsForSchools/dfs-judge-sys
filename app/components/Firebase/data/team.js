@@ -2,19 +2,24 @@
 
 class Team {
   
-  constructor(teamName, appName, appDescription, judgeName){
+  constructor(teamName, appName, appDescription, judgeName, e, p){
     this.teamName = teamName;
     this.appName = appName;
     this.appDescription = appDescription;
     this.judgeName = judgeName;
-    this.dscore1 = 1;
+    this.dscore1 = null;
     this.dscore2 = null;
     this.fscore1 = null;
     this.fscore2 = null;
     this.tscore1 = null;
     this.tscore2 = null;
-    this.pscore1 = null;
     this.totalScore = 0;
+    this.email = e;
+    this.password = p;
+    this.submitClicked = false;
+  }
+  checkSubmit(bool) {
+    this.submitClicked = bool;
   }
   // Set score based on the score type (design, functionality, theme, presentation)
   setScore(id, e){
@@ -85,7 +90,6 @@ class Team {
     }else{
       return true;
     }
-    // return true;
   }
   
 }

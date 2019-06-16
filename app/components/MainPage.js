@@ -20,8 +20,12 @@ class MainPage extends React.Component{
       onScore: true,
       allTeam: [],
       onShowPresentation: false,
-      presentationScore: {}
-                };
+      presentationScore: {},
+      submitCounter: 0,
+      pSubmitClicked: false,
+      authenticated: false
+    };
+    
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onOverview = this.onOverview.bind(this);
@@ -33,6 +37,9 @@ class MainPage extends React.Component{
     this.getTeamData = this.getTeamData.bind(this);
     this.renderPresentationScore = this.renderPresentationScore.bind(this);
     this.onPresentationScoreChange = this.onPresentationScoreChange.bind(this);
+    this.deleteAccount = this.deleteAccount.bind(this);
+    this.reauthenticate = this.reauthenticate.bind(this);
+
   }
   // Control Score Tab
   onScore(){
@@ -55,62 +62,65 @@ class MainPage extends React.Component{
     }
   }
   // Submit score, pop up window to prevent error
-  handleSubmit(i){
-   
-      if (!this.props.teams[i].isScoreComplete()){
-        swal({
-          title: "You cannot submit scores",
-          text: "You have some unfinished score field",
-          icon: "warning",
-          button: true,
-        })
-      }else{
-        swal({
-          title: "Are you sure to submit all the teams' score?",
-          text: "Once submitted, you will not be able to modify any scores!",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-        })
-        .then((willSubmit) => {
-          if (willSubmit) {
-            swal("Score Submitted!", {
-              icon: "success",
+  handleSubmit(i) {
+    var self = this;
+    if (!this.props.teams[i].isScoreComplete()){
+      swal({
+        title: "You cannot submit scores",
+        text: "You have some unfinished score field",
+        icon: "warning",
+        button: true,
+      })
+    }else{
+      swal({
+        title: "Are you sure to submit all the teams' score?",
+        text: "Once submitted, you will not be able to modify any scores!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willSubmit) => {
+        if (willSubmit) {
+          swal("Score Submitted!", {
+            icon: "success",
+          });
+          
+            var temp = {
+              judgeName: this.props.teams[i].judgeName,
+              dscore1: this.props.teams[i].dscore1,
+              dscore2: this.props.teams[i].dscore1,
+              fscore1: this.props.teams[i].fscore1,
+              fscore2: this.props.teams[i].fscore2,
+              tscore1: this.props.teams[i].tscore1,
+              tscore2: this.props.teams[i].tscore2,
+              pscore1: this.props.teams[i].fscore1,
+              totalScore: this.props.teams[i].totalScore
+            }
+            var teamName = this.props.teams[i].teamName;
+            var stringof = teamName + ".scores." + this.props.teams[i].judgeName;
+            var teamRef = this.db.collection(this.props.eventName).doc('teams');
+            teamRef.update({
+              [stringof]: temp
+            })
+            .then(function () {
+              console.log("Document successfully updated!");
+            }).then(function () {
+              self.props.teams[i].checkSubmit(true);
+              var c = self.state.submitCounter + 1;
+              self.setState({ submitCounter: c });
+              self.reauthenticate();
             });
-           
-              var temp = {
-                judgeName: this.props.teams[i].judgeName,
-                dscore1: this.props.teams[i].dscore1,
-                dscore2: this.props.teams[i].dscore1,
-                fscore1: this.props.teams[i].fscore1,
-                fscore2: this.props.teams[i].fscore2,
-                tscore1: this.props.teams[i].tscore1,
-                tscore2: this.props.teams[i].tscore2,
-                pscore1: this.props.teams[i].fscore1,
-                totalScore: this.props.teams[i].totalScore
-              }
-              var teamName = this.props.teams[i].teamName;
-              var stringof = teamName + ".scores." + this.props.teams[i].judgeName;
-              var teamRef = this.db.collection(this.props.eventName).doc('teams');
-              teamRef.update({
-                [stringof]: temp
-              })
-              .then(function () {
-                console.log("Document successfully updated!");
-              });
-            
-          } else {
-            swal("Scores are not submitted!");
-          }
-        });
-      }
-    
+        } else {
+          swal("Scores are not submitted!");
+        }
+      });
+    }
+  
   }
   handleSignOut() {
     fire.auth().signOut();
   }
   renderTeamTab(){
-    console.log("calling get team data", this.props.teams);
     var teamCol = [];
     for (var i = 0; i < this.props.teams.length; i++){
       teamCol.push(
@@ -165,7 +175,6 @@ class MainPage extends React.Component{
     );
   }
   renderScore(i) {
-    console.log("score", this.props.teams)
     return(
       <div className="main-content-wrapper">
         <p className="judge-name">Judge name: {this.props.teams[0].judgeName}</p>
@@ -217,26 +226,32 @@ class MainPage extends React.Component{
               {this.renderCustomDropdown15("tscore2", this.props.teams[i].tscore2, i)}
             </Col>
           </Row>
-          {/* <Row className="main-content-row">
-            <Col className="main-content-col" sm={true}><p className="main-content-header">PRESENTATION - 10 Pts:</p></Col>
-          </Row>
-          <Row className="main-content-row">
-            <Col className="main-content-col" sm={10}><p className="main-content last">1. How well was the on-stage presentation of the app by the team?<small> - 10 Pts</small></p></Col>
-            <Col className="main-content-col" sm={2}>
-              {this.renderCustomDropdown10("pscore1", this.props.teams[i].pscore1, i)}
-            </Col>
-          </Row> */}
+          
         </Container>
+        {this.props.teams[i].submitClicked &&
           <button className="pane-tab"
-          type="button"
-          style={{
-            marginLeft: "80%",
-            backgroundColor: "#4156A6",
-            color: "#FFFFFF",
-            padding: "10px",
-            borderRadius: "20%"
-          }}
-          onClick={(e) => this.handleSubmit(i,e)}>Submit</button>
+            type="button"
+            style={{
+              marginLeft: "80%",
+              backgroundColor: "#a3a3a3",
+              color: "#d3d3d3",
+              padding: "10px",
+              borderRadius: "20%"
+            }}
+            disabled
+            onClick={(e) => this.handleSubmit(i, e)}>Submit</button>}
+        {!this.props.teams[i].submitClicked && 
+          <button className="pane-tab"
+            type="button"
+            style={{
+              marginLeft: "80%",
+              backgroundColor: "#4156A6",
+              color: "#FFFFFF",
+              padding: "10px",
+              borderRadius: "20%"
+            }}
+            onClick={(e) => this.handleSubmit(i, e)}>Submit</button>}
+          
        </div>
     );
 
@@ -295,7 +310,7 @@ class MainPage extends React.Component{
               </Col>
               <Col className="main-col" sm={3}>
               </Col>
-              <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/100</div></Col>
+              <Col className="main-col" sm={2}><div className="total-score">Total: {this.props.teams[i].totalScore}/90</div></Col>
               <Col className="main-col" sm={1}></Col>
             </Row>
             {this.state.onOverview && this.renderOverview(i)}
@@ -321,16 +336,30 @@ class MainPage extends React.Component{
           </Row>
           {this.state.onShowPresentation && this.renderPresentationScore()}
         </Container>
-        <button className="pane-tab"
-          type="button"
-          style={{
-            marginLeft: "80%",
-            backgroundColor: "#4156A6",
-            color: "#FFFFFF",
-            padding: "10px",
-            borderRadius: "20%"
-          }}
-          onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>
+        {this.state.pSubmitClicked &&
+          <button className="pane-tab"
+            type="button"
+            disabled
+            style={{
+              marginLeft: "80%",
+              backgroundColor: "#a3a3a3",
+              color: "#d3d3d3",
+              padding: "10px",
+              borderRadius: "20%"
+            }}
+            onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>}
+        {!this.state.pSubmitClicked &&
+          <button className="pane-tab"
+            type="button"
+            style={{
+              marginLeft: "80%",
+              backgroundColor: "#4156A6",
+              color: "#FFFFFF",
+              padding: "10px",
+              borderRadius: "20%"
+            }}
+            onClick={(e) => this.onPresentationSubmit(e)}>Submit</button>}
+       
       </Tab.Pane>
     teamPane.push(presentation);
     return teamPane;
@@ -378,6 +407,7 @@ class MainPage extends React.Component{
     )
   }
   onPresentationSubmit() {
+    var self = this;
     var size = Object.keys(this.state.presentationScore).length;
     if (size != this.state.allTeam.length) {
       swal({
@@ -401,11 +431,7 @@ class MainPage extends React.Component{
               icon: "success",
             });
             for (const [key, value] of Object.entries(this.state.presentationScore)) {
-              // var temp = {
-              //   judgeName: this.props.teams[0].judgeName,
-              //   presentationScore: value
-              // }
-              // console.log("temp", temp);
+              
               var teamName = key;
               var stringof = teamName + ".presentationScores." + this.props.teams[0].judgeName;
               var teamRef = this.db.collection(this.props.eventName).doc('teams');
@@ -414,6 +440,11 @@ class MainPage extends React.Component{
               })
                 .then(function () {
                   console.log("presentation scores successfully updated!");
+                }).then(function () {
+                  self.setState({ pSubmitClicked: true });
+                  var c = self.state.submitCounter + 1;
+                  self.setState({ submitCounter: c });
+                  self.reauthenticate();
                 });
             }
           } else {
@@ -424,9 +455,7 @@ class MainPage extends React.Component{
     }
 
   }
-  getTeamData() {
-    console.log("calling get team data", this.props.eventName, this.props.teams);
-    
+  getTeamData() {    
     var teamRef = this.db.collection(this.props.eventName).doc('teams');
     teamRef.get().then(function (doc) {
       if (doc.exists) {
@@ -439,14 +468,43 @@ class MainPage extends React.Component{
         return allTeam;
       }
     }).then(allTeam => {
-      console.log("all team names: ", allTeam);
       this.setState({ allTeam: allTeam, onShowPresentation: true });
     }).catch(function (error) {
       console.log("Error getting document:", error);
     });
   }
-
-  render(){
+  reauthenticate() {
+    var self = this;
+    if (this.state.submitCounter >= (this.props.teams.length + 1)) {
+      console.log("delete account!")
+      var user = fire.auth().currentUser;
+      ;
+      var credential = firebase.auth.EmailAuthProvider.credential(
+        this.props.teams[0].email,
+        this.props.teams[0].password
+      );
+      user.reauthenticateAndRetrieveDataWithCredential(credential).then(function () {
+        // User re-authenticated.
+        console.log("User re-authenticated.")
+        self.deleteAccount();
+      }).catch(function (error) {
+        console.log("User re-authenticated error: ", error);
+      });
+      
+    }else{
+      console.log("submit counter: ", this.state.submitCounter);
+    }
+  }
+  deleteAccount() {
+    console.log("authenticated");
+    var user = fire.auth().currentUser;
+    user.delete().then(function () {
+      console.log("your account has been deleted")
+    }).catch(function (error) {
+      console.log("deleting account error: ", error);
+    });
+  }
+  render() {
     return(
       <Tab.Container id="left-tabs" defaultActiveKey="0">
         <Row className="main-row">
